@@ -26,7 +26,7 @@ const SEG = [
   { v: [C74, 112.92], a: [C73, 17.40], d: 2.60, z: 1.0, not: 'salon alkışlıyor (sunucu kamerası savruluyor), ses sürüyor' },
   { v: [C73, 20.00], a: [C73, 20.00], d: 3.40, z: 1.0, not: '"...Ertuğ Ertaş\'ı alkışlarınızla sahneye davet ediyorum"' },
   { v: [C74, 0.20], d: 2.40, z: 1.0, not: 'mikrofon teslimi' },
-  { v: [C74, 10.40], d: 5.84, z: 1.0, isim: true, not: '"Öncelikle gecemize hoş geldiniz. Hepimize öğretmenler günü kutlu olsun."' },
+  { v: [C74, 11.30], d: 4.94, z: 1.0, isim: true, not: '"Hoş geldiniz. Hepimize öğretmenler günü kutlu olsun." (11.0-11.3 belini düzeltiyor: alınmadı)' },
   { v: [C74, 31.04], d: 6.32, z: 1.12, not: '"Bizim kurulduğumuzdan beri bu onuncu öğretmenler günü."' },
   { v: [C74, 47.36], d: 10.04, z: 1.0, not: '"Çok uzun bir konuşma yapmamak adına... çok vaktinizi almamak için."' },
   { v: [C74, 61.20], d: 12.04, z: 1.12, not: '"Ama benim Final Okulları olarak onuncu, öğretmen olarak 29. öğretmenler günüm."' },

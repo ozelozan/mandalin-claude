@@ -31,7 +31,7 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Kameraya çok yakın / bulanık geçen kişi yok (v2'de 7 plan bu yüzden değişti).
 
 ## Kurucu konuşması videosu (Ertuğ Ertaş)
-`node kaynak/kurucu.js <çalışma-klasörü> <çıktı.mp4>` → `cikti/Kurucu-Ertug-Ertas-Ogretmenler-Gunu-Konusmasi-v2.mp4` (1:28).
+`node kaynak/kurucu.js <çalışma-klasörü> <çıktı.mp4>` → `cikti/Kurucu-Ertug-Ertas-Ogretmenler-Gunu-Konusmasi-v3.mp4` (1:27; v3: belini düzelttiği an çıktı, konuşma "Hoş geldiniz" ile başlar).
 - Kaynak: C0073 (sunucunun çağrısı) + C0074 (konuşma). Kesimler faster-whisper kelime zamanlarına göre.
 - Sunucu kamerası savrulan anlarda ses sürer, görüntü salona geçer.
 - Çıkanlar: baştaki "Şimdi…" ve bekleme, sunucunun "dokuzuncu" demesini düzelten "kimine göre dokuz, on" bölümü, uzun alkış ve sessizlik boşlukları.
