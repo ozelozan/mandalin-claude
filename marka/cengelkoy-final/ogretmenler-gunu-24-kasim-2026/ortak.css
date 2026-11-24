@@ -1,17 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,800&display=swap');
+
+/* Çengelköy Final Okulları — Öğretmenler Günü hikayeleri (1080x1920)
+   Yazı ölçüsü (1080 px genişlikte):
+   etiket 26 · başlık 64-76 · alt metin 32-34 · not 26
+   Instagram güvenli alanı: üstte ~170 px, altta ~200 px boş bırakılır. */
+
+:root{
+  --lacivert:#1b1f6e;
+  --lacivert-koyu:#10134a;
+  --kirmizi:#e2231a;
+  --sari:#ffc928;
+  --krem:#fff8ec;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;overflow:hidden;background:#0b1030}
+html,body{height:100%;overflow:hidden;background:#0b0e33}
 body{display:flex;align-items:center;justify-content:center}
+
 .story{position:relative;width:1080px;height:1920px;flex:none;overflow:hidden;
-  font-family:"Avenir Next","Helvetica Neue",Arial,sans-serif;color:#fff;transform-origin:center center}
+  font-family:"Montserrat","Avenir Next","Helvetica Neue",Arial,sans-serif;color:#fff;
+  transform-origin:center center}
+
+/* Zeminler */
+.zemin-lacivert{background:radial-gradient(120% 70% at 50% 30%,#2a2f94 0%,var(--lacivert) 45%,var(--lacivert-koyu) 100%)}
+
+/* Tam ekran fotoğraf + okunurluk için üst karartma */
 .foto-tam{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-/* Logo: gorseller/logo.png varsa o gorunur, yoksa yazili yedek */
-.logo{position:absolute;top:262px;left:50%;transform:translateX(-50%);height:128px;min-width:360px;padding:0 44px;
-  border-radius:70px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 40px rgba(0,0,0,.28)}
-.logo img{height:92px;width:auto;display:block}
-.yedek{display:none;flex-direction:column;align-items:center;line-height:1}
-.yedek b{font-size:62px;font-style:italic;font-weight:800;color:#1c2b8c;letter-spacing:-1px}
-.yedek i{font-style:normal;font-size:23px;font-weight:700;letter-spacing:8px;color:#d7261e;margin-top:4px}
-.tag{display:inline-block;padding:10px 30px;border-radius:40px;background:#d7261e;color:#fff;font-weight:800;font-size:38px;letter-spacing:3px}
-.baslik{font-weight:900;letter-spacing:-2px}
-.kutlu{font-weight:900;color:#ffd23f}
+.karartma-ust{position:absolute;left:0;right:0;top:0;
+  background:linear-gradient(180deg,rgba(16,19,74,.94) 0%,rgba(16,19,74,.82) 50%,rgba(16,19,74,0) 100%)}
+
+/* Logo: koyu zeminde beyaz yazılı sürüm, plaka yok */
+.logo{position:absolute;left:50%;transform:translateX(-50%);display:block}
+.logo img{display:block;width:100%;height:auto}
+
+/* Yazılar */
+.ortala{position:absolute;left:80px;right:80px;text-align:center}
+.etiket{display:inline-block;padding:10px 26px;border-radius:40px;background:var(--kirmizi);
+  font-weight:700;font-size:26px;letter-spacing:4px;line-height:1}
+.baslik{font-weight:800;line-height:1.08;letter-spacing:-1px;text-shadow:0 4px 18px rgba(0,0,0,.3)}
+.baslik em{font-style:normal;color:var(--sari)}
+.alt-metin{font-weight:500;font-size:33px;line-height:1.38;color:rgba(255,255,255,.92)}
+
+/* Fotoğraf çerçeveleri: insanlar kırpılmasın diye her karede object-position ayrı ayarlı */
+.kare{position:absolute;padding:10px;background:#fff;border-radius:24px;box-shadow:0 22px 50px rgba(0,0,0,.38)}
+.kare img{display:block;width:100%;height:100%;object-fit:cover;border-radius:15px}
+
+/* Kemerdeki gibi renkli yıldızlar */
 .yildiz{position:absolute;clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
