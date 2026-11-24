@@ -29,3 +29,11 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Bel altını gösteren kare yok (plaket kliplerinde yalnızca bacak görünen anlar var, alınmadı).
 - Sigara içen kişi yok.
 - Kameraya çok yakın / bulanık geçen kişi yok (v2'de 7 plan bu yüzden değişti).
+
+## Kurucu konuşması videosu (Ertuğ Ertaş)
+`node kaynak/kurucu.js <çalışma-klasörü> <çıktı.mp4>` → `cikti/Kurucu-Ertug-Ertas-Ogretmenler-Gunu-Konusmasi-v2.mp4` (1:28).
+- Kaynak: C0073 (sunucunun çağrısı) + C0074 (konuşma). Kesimler faster-whisper kelime zamanlarına göre.
+- Sunucu kamerası savrulan anlarda ses sürer, görüntü salona geçer.
+- Çıkanlar: baştaki "Şimdi…" ve bekleme, sunucunun "dokuzuncu" demesini düzelten "kimine göre dokuz, on" bölümü, uzun alkış ve sessizlik boşlukları.
+- Aynı kameradaki kesimlerde kadraj 1.0 / 1.12 dönüşümlü (sıçrama hissi olmasın). İsim yazısı: "Ertuğ Ertaş / Kurucu, Final Okulları".
+- Ses: konuşma -16 LUFS, tepe -2 dBTP. Sonda alkış, ardından fon müziğinin son ölçüleriyle 4 logolu beyaz kart.
