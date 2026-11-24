@@ -43,3 +43,12 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Arka büfedeki ve sol kemerli raflardaki içki şişeleri yerine vazo, pampas, zeytin dalı, pirinç figür, kitap ve şamdan.
 - Üretim Magnific retouch (Nano Banana Pro) ile maskeli; büyük karede sağ bölme ve sol kemerler tutmadığı için ayrı kırpımlarla yapıldı.
 - `kaynak/bufe-dekor.py` birleştirir: insan maskesindeki (SAM 3.1) her piksel orijinalden birebir geri yazılır (doğrulama: 739.120 insan pikseli, 0 değişen). Ara dosyalar `cikti/fotograf/ara-dosyalar/`.
+
+## Paradise sürümü (Ozan'ın müziği)
+`node kaynak/kur.js kaynak/plan-paradise.js <çalışma> <çıktı>` → `cikti/Final-Okullari-Ogretmenler-Gunu-Gecesi-2026-Paradise-v2.mp4` (2:42).
+- Müzik `muzik/#40 Paradise (Official).mp4`: sözsüz (konuşma tanıma söz bulmadı), 103 BPM, faz 0,085 sn; tek parça, kesintisiz. b256'daki sakin bölüme düşüşte logo kartı girer, sonda 3 sn sönüm.
+- Yavaş çekim yok (titreme yapıyordu). Girişte mekan planı azaltıldı; Çengelköy/Beykoz/Yakacık isimlikleri `fotoğraflar/denemeler` içinden (yalnız okundu). Yakacık isimliğinin yanındaki markalı rakı bardağı kırpımla kadraj dışı.
+- Karşılama doğrudan tokalaşmayla başlar; kurucunun belini düzelttiği an (C0074 9.5-11.2) çıktı.
+- Bölüm aralarında fotoğraf planları (hediye, Beykoz idari kadro masası, masada öğretmenler, büfe dekorlu toplu plaket). Personel/boş masa ve içki rafı görünen fotoğraflar kullanılmadı.
+- Eğlence: önceki sürümde kullanılmayan C0078, C0082, C0088, C0100, C0106, C0123, C0129 + en iyi eski planlar.
+- kur.js artık fotoğraf planı alır: `{ foto, fy, kz, fx, b }`.

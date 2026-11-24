@@ -31,6 +31,8 @@ const runAsync = (args) => new Promise((res, rej) => {
   p.on('close', (c) => (c === 0 ? res() : rej(new Error('ffmpeg ' + c + ' ' + args.join(' ')))));
 });
 const src = (c) => `${cfg.kamera}/${c.id}.MP4`;
+// fotoğraf planı: { foto: 'tam/yol.jpg', fy: 0..1 (16:9 bandın dikey konumu), b }
+const cid = (c) => (c.foto ? 'F' + path.basename(c.foto).replace(/\.[^.]+$/, '') + '_' + (c.fy ?? 0.5) + (c.kz ? '_' + c.kz + '_' + c.fx : '') : c.id);
 
 // ---- plan ----
 const plan = [];
@@ -41,7 +43,7 @@ cfg.bolumler.forEach((s, si) => {
     const zin = ci === 0 && si > 0;
     const zout = ci === s.clips.length - 1 && si < cfg.bolumler.length - 1;
     // dosya adı içerikten: plan değişince yalnızca değişen segmentler yeniden işlenir
-    const key = [c.id.replace(/[^A-Za-z0-9]/g, ''), c.ss, f1 - f0, c.hiz || 1, +zin, +zout, idx % 2].join('_');
+    const key = [cid(c).replace(/[^A-Za-z0-9]/g, ''), c.ss, f1 - f0, c.hiz || 1, +zin, +zout, idx % 2].join('_');
     plan.push({ i: idx, si, ci, c, n: f1 - f0, f0, zin, zout, key, file: `${W}/seg/${key}.mp4` });
     beat += c.b; idx++;
   });
@@ -55,6 +57,7 @@ function olc() {
   const out = fs.existsSync(OLCU) ? JSON.parse(fs.readFileSync(OLCU)) : {};
   for (const p of plan) {
     if (out[p.key] !== undefined) continue;
+    if (p.c.foto) { out[p.key] = null; continue; }
     const hiz = p.c.hiz || 1;
     const vals = [];
     for (const fr of [0.2, 0.5, 0.8]) {
@@ -84,6 +87,28 @@ function zoomExpr(p) {
   if (p.zin) z += `*(1+${ZAMP}*pow(max(1-on/${ZT}\\,0)\\,3))`;
   if (p.zout) z += `*(1+${ZAMP}*pow(max((on-${N - ZT})/${ZT}\\,0)\\,3))`;
   return z;
+}
+
+function fotoArgs(p) {
+  // EXIF yönü düzeltilmiş 16:9 bant (3840x2160) hazırlanır, video planlarıyla aynı zoom ve geçiş uygulanır
+  const c = p.c, n = p.n, png = p.file.replace('.mp4', '.png');
+  if (!fs.existsSync(png)) execFileSync('python3', ['-c', `
+import sys
+from PIL import Image, ImageOps
+im=ImageOps.exif_transpose(Image.open(sys.argv[1])).convert('RGB'); w,h=im.size; fy=float(sys.argv[3])
+bw,bh=(w,round(w*9/16)) if w*9/16<=h else (round(h*16/9),h)
+kz=float(sys.argv[4]); fx=float(sys.argv[5]); bw,bh=round(bw*kz),round(bh*kz)
+x=min(max(round(w*fx-bw/2),0),w-bw); y=round((h-bh)*fy)
+im.crop((x,y,x+bw,y+bh)).resize((3840,2160),Image.LANCZOS).save(sys.argv[2])`, c.foto, png, String(c.fy ?? 0.5), String(c.kz || 1), String(c.fx ?? 0.5)]);
+  const parts = [`zoompan=z='${zoomExpr(p)}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d=1:s=1920x1080:fps=${FPS}`,
+    "curves=all='0/0 0.5/0.5 0.88/0.84 1/0.90'", 'unsharp=5:5:0.25:5:5:0'];
+  const bl = [];
+  if (p.zin) bl.push(`lt(n\\,4)`);
+  if (p.zout) bl.push(`gte(n\\,${n - 4})`);
+  if (bl.length) parts.push(`boxblur=8:1:enable='${bl.join('+')}'`);
+  parts.push('format=yuv420p');
+  return ['-loop', '1', '-framerate', String(FPS), '-i', png, '-vf', parts.join(','), '-frames:v', String(n), '-r', String(FPS),
+    '-c:v', 'libx264', '-crf', '13', '-preset', 'fast', '-pix_fmt', 'yuv420p', p.file];
 }
 
 function segArgs(p, pass, trf, gam) {
@@ -125,6 +150,7 @@ async function segmentler() {
     while (k < kuyruk.length) {
       const p = kuyruk[k++];
       const trf = p.file.replace('.mp4', '.trf');
+      if (p.c.foto) { await runAsync(fotoArgs(p)); process.stdout.write('.'); continue; }
       await runAsync(segArgs(p, 'detect', trf));
       await runAsync(segArgs(p, 'render', trf, gamma(olcu[p.key])));
       process.stdout.write('.');
@@ -184,7 +210,7 @@ function final() {
     `drawbox=x=(iw-90)/2:y=500:w=90:h=2:color=white@0.75:t=fill:enable='between(t,1.3,6.4)',` +
     `drawtext=fontfile='${GEO_I}':text='${b2}':fontsize=104:fontcolor=white:shadowcolor=black@0.5:shadowx=2:shadowy=3:x=(w-text_w)/2:y='522+14*(1-${ease(1.5, 1.3)})':alpha='${ease(1.5, 1.1)}*${fo}',` +
     `drawtext=fontfile='${GEO}':text='${b3}':fontsize=40:fontcolor=white@0.9:x=(w-text_w)/2:y='668+12*(1-${ease(2.3, 1.2)})':alpha='${ease(2.3, 1.0)}*${fo}'`;
-  const muzikF = `[3:a]atrim=0:${cfg.bitisSn},asetpts=PTS-STARTPTS,afade=t=out:st=${cfg.bitisSn - 1.2}:d=1.2,loudnorm=I=-14:TP=-1.5:LRA=11[a]`;
+  const muzikF = `[3:a]atrim=0:${cfg.bitisSn},asetpts=PTS-STARTPTS,afade=t=out:st=${cfg.bitisSn - (cfg.muzikSonus || 1.2)}:d=${cfg.muzikSonus || 1.2},loudnorm=I=-14:TP=-1.5:LRA=11[a]`;
   const filt =
     `[0:v][1:v]xfade=transition=fadewhite:duration=${12 / FPS}:offset=${xoff}[v0];` +
     `[2:v]format=rgba,fade=in:st=0.4:d=1.0:alpha=1,fade=out:st=5.5:d=1.0:alpha=1[bant];` +
