@@ -52,3 +52,9 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Bölüm aralarında fotoğraf planları (hediye, Beykoz idari kadro masası, masada öğretmenler, büfe dekorlu toplu plaket). Personel/boş masa ve içki rafı görünen fotoğraflar kullanılmadı.
 - Eğlence: önceki sürümde kullanılmayan C0078, C0082, C0088, C0100, C0106, C0123, C0129 + en iyi eski planlar.
 - kur.js artık fotoğraf planı alır: `{ foto, fy, kz, fx, b }`.
+
+## Fotoğraf albümü videosu (yarım, 24 Kasım 2026)
+`node kaynak/kur.js kaynak/plan-fotograf.js <çalışma> <çıktı>` → `cikti/Final-Okullari-Ogretmenler-Gunu-Gecesi-2026-Fotograf-Albumu-v1.mp4` (1:44).
+- Paradise müziği, 33 kolaj (tek/ikili/üçlü/dörtlü/büyük+iki küçük), olay sırası: karşılama, hediye, masalar, konuşmalar, plaketler, eğlence; sonda aynı 4 logolu beyaz kart.
+- Kolajlar `kaynak/kolaj.py` ile `<etkinlik>/kolaj/` klasörüne üretilir (yeniden üretilebilir, git dışı).
+- Kalan: tebrik kartı planı hediye ikilisiyle değiştirildi, son render'ın 20-28 sn arası henüz izlenmedi; tüm video bir kez daha izlenmeli.
