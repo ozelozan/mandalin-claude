@@ -37,3 +37,9 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Çıkanlar: baştaki "Şimdi…" ve bekleme, sunucunun "dokuzuncu" demesini düzelten "kimine göre dokuz, on" bölümü, uzun alkış ve sessizlik boşlukları.
 - Aynı kameradaki kesimlerde kadraj 1.0 / 1.12 dönüşümlü (sıçrama hissi olmasın). İsim yazısı: "Ertuğ Ertaş / Kurucu, Final Okulları".
 - Ses: konuşma -16 LUFS, tepe -2 dBTP. Sonda alkış, ardından fon müziğinin son ölçüleriyle 4 logolu beyaz kart.
+
+## Fotoğraf: DSC04988-2A büfe dekoru
+`cikti/fotograf/DSC04988-2A-bufe-dekor.jpg` (5801x3234; orijinal `fotoğraflar/plaket/` içinde dokunulmadan duruyor).
+- Arka büfedeki ve sol kemerli raflardaki içki şişeleri yerine vazo, pampas, zeytin dalı, pirinç figür, kitap ve şamdan.
+- Üretim Magnific retouch (Nano Banana Pro) ile maskeli; büyük karede sağ bölme ve sol kemerler tutmadığı için ayrı kırpımlarla yapıldı.
+- `kaynak/bufe-dekor.py` birleştirir: insan maskesindeki (SAM 3.1) her piksel orijinalden birebir geri yazılır (doğrulama: 739.120 insan pikseli, 0 değişen). Ara dosyalar `cikti/fotograf/ara-dosyalar/`.
