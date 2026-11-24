@@ -58,3 +58,10 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Paradise müziği, 33 kolaj (tek/ikili/üçlü/dörtlü/büyük+iki küçük), olay sırası: karşılama, hediye, masalar, konuşmalar, plaketler, eğlence; sonda aynı 4 logolu beyaz kart.
 - Kolajlar `kaynak/kolaj.py` ile `<etkinlik>/kolaj/` klasörüne üretilir (yeniden üretilebilir, git dışı).
 - Tebrik kartı fotoğrafı bulanık olduğu için yerine hediye ikilisi kondu; video baştan sona izlendi.
+
+## Fotoğraf albümü v2: çerçeveli baskılar (24 Kasım 2026)
+`python3 kaynak/album.py <çalışma>` (govde.mp4) + `node kaynak/kur.js kaynak/plan-album.js <çalışma> <çıktı> kart|final`
+→ `cikti/Final-Okullari-Ogretmenler-Gunu-Gecesi-2026-Fotograf-Albumu-v2.mp4` (1:44).
+- Ozan v1 kolajları beğenmedi. v2: her fotoğraf beyaz çerçeveli baskı, sahnenin bulanık ışığı önüne vuruşta düşer/kayar/büyür, albüm gibi birikir; sahne geçişi öne büyüyüp kararma.
+- Sahneler: açılış (sahne, Öğretmenler Günü ekranı), karşılama (3 farklı misafir), hediye (4), masalar (2x4), konuşmacılar (sunucu, kurucu, solist, mavi gömlekli konuşmacı: tek sahne, farklı kişiler), 16 plaket üst üste birikir + toplu fotoğraf, eğlence (2x4), 4 logolu beyaz kapanış.
+- `fotoğraflar/denemeler kullanma` klasörü kullanılmaz (Ozan adını değiştirdi).
