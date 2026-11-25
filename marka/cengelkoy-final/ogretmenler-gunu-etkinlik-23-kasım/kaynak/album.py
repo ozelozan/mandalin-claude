@@ -48,18 +48,25 @@ SAHNELER = [
          kart=L4([ma('DSC04722'), ma('DSC04728'), ma('DSC04730'), ma('DSC04746')], 35, adim=1)),
     dict(ad='masa2', b=(42, 50), arka=ma('DSC04762'),
          kart=L4([ma('DSC04759'), ma('DSC04762'), ma('DSC04769'), ma('DSC04772')], 43, adim=1, tipler=('slideL', 'drop', 'pop', 'slideR'))),
-    dict(ad='konusma', b=(50, 60), arka=ko('DSC04925'),
-         kart=[(ko('DSC04784'), 330, 545, -4, 380, 51, 'drop'),
-               (ko('DSC04792'), 750, 520, 3, 380, 53, 'slideL'),
-               (ko('DSC04919'), 1170, 550, -3, 380, 55, 'slideR'),
-               (ko('DSC04927'), 1590, 525, 4, 380, 57, 'pop', 0.38, 0.5, 2 / 3)]),
+    dict(ad='konusma', b=(50, 60), arka=ko('DSC04925'),   # Ozan'ın sırası: kurucu, mavi gömlekli, sunucu, solist
+         kart=[(ko('DSC04792'), 330, 545, -4, 380, 51, 'drop'),
+               (ko('DSC04927'), 750, 520, 3, 380, 53, 'slideL', 0.38, 0.5, 2 / 3),
+               (ko('DSC04784'), 1170, 550, -3, 380, 55, 'slideR'),
+               (ko('DSC04919'), 1590, 525, 4, 380, 57, 'pop')]),
+    # plaketler plaket verene göre sıralı (Ozan): 1. kurucu, 2. kurucu, 3, 4, 5, 6; sonra Veysel Hoca'nın iki
+    # fotoğrafı ortada yan yana, en son toplu fotoğraf
     dict(ad='plaket', b=(60, 88), arka=pl('DSC04944'),
          kart=[(pl(n), [250, 615, 980, 1345, 1710][i % 5] + (60 if (i // 5) % 2 else 0),
                 [400, 690, 470, 650][(i // 5) % 4], [-5, 3, -2, 4, -3, 2][i % 6], 330, 61 + i, TIP[i % 4])
-               for i, n in enumerate(['DSC04931', 'DSC04934', 'DSC04936', 'DSC04940', 'DSC04944', 'DSC04945', 'DSC04948', 'DSC04950',
-                                      'DSC04952', 'DSC04955', 'DSC04958', 'DSC04959', 'DSC04962', 'DSC04965', 'DSC04966', 'DSC04970'])]
-         + [(FO + 'plaket/zeynep-veysel hoca.jpg', 1100, 560, 3, 360, 77, 'drop')]   # Zeynep ve Veysel Hoca
-         + [(EV + '/cikti/fotograf/DSC04988-2A-bufe-dekor.jpg', 960, 560, -1.5, 1300, 80, 'drop')]),
+               for i, n in enumerate(['DSC04931', 'DSC04934', 'DSC04936',                 # 1. kurucu
+                                      'DSC04940', 'DSC04944', 'DSC04945', 'DSC04948',     # 2. kurucu
+                                      'DSC04959', 'DSC04962',                             # 3
+                                      'DSC04965', 'DSC04966',                             # 4
+                                      'DSC04955', 'DSC04958',                             # 5
+                                      'DSC04950', 'DSC04952'])]                           # 6
+         + [(pl('DSC04970'), 760, 555, -3, 430, 76, 'slideL'),
+            (FO + 'plaket/zeynep-veysel hoca.jpg', 1160, 545, 3, 430, 77, 'slideR')]
+         + [(EV + '/cikti/fotograf/DSC04988-2A-bufe-dekor.jpg', 960, 560, -1.5, 1300, 82, 'drop')]),
     dict(ad='eglence1', b=(88, 96), arka=eg('DSC04869'),
          kart=L4([eg('DSC04864'), eg('DSC04862'), eg('DSC04869'), eg('DSC04883')], 89, adim=1)),
     dict(ad='eglence2', b=(96, 104), arka=eg('DSC04894'),
