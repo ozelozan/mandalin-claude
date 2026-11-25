@@ -1,6 +1,6 @@
 # Çağdaş Bilgi Öğretmenler Günü Gecesi (24 Kasım 2026, Sur Salon): yatay etkinlik videosu
 
-Kaynak videolar (git dışı, 7,6 GB, 76 klip, 1080p 100 fps): `~/Mini_MAN/mandalin-claude/marka/cadgas bilgi kurs/Çağdaş Bilgi Öğretmenler Günü Gecesi 2026/videolar/`
+Kaynak videolar ve fotoğraflar (`fotoğraflar/plaket`, `fotoğraflar/ödül`) (git dışı, 7,6 GB, 76 klip, 1080p 100 fps): `~/Mini_MAN/mandalin-claude/marka/cadgas bilgi kurs/Çağdaş Bilgi Öğretmenler Günü Gecesi 2026/videolar/`
 Çıktı: aynı klasörde `cikti/`, müzik `muzik/fon-muzigi-v1.mp3` (git dışı).
 
 ## Çalıştırma
@@ -37,3 +37,4 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir.
 ## Sürümler
 - v1 (25 Kasım 2026): `cikti/Cagdas-Bilgi-Ogretmenler-Gunu-Gecesi-2026-v1.mp4` (2:18, -14,0 LUFS, tepe -2 dBFS; render sonrası `volume=-1dB`, video kopya). Saniyelik karelerle izlendi, kulakla dinlenmedi.
 - v2 (25 Kasım 2026, Ozan'ın isteği): `cikti/Cagdas-Bilgi-Ogretmenler-Gunu-Gecesi-2026-v2.mp4` (2:00, -14,5 LUFS, tepe -1,9 dBFS). Boş sahneler 20 sn yerine 7,5 sn ve 1,5x hızlı (C0141 çıktı); başlık yalnız Sur Salon planında (0,5-4,4 sn). Müzik 24. sn'den başlar, patlama videonun 8. sn'sinde. C0154, C0240, C0244 kısaldı, C0178 çıktı. Müzik logo kartından itibaren 8 sn doğrusal sönümle biter. v1'deki ani kesilmenin nedeni, loudnorm'un sönümü yükseltmesi ve ardından gelen 1 sn'lik fade'di. Ses artık ayrı işleniyor (`muzik.wav`), loudnorm fade'den önce uygulanıyor. Kulakla dinlenmedi.
+- v3 (25 Kasım 2026, Ozan'ın isteği): `cikti/Cagdas-Bilgi-Ogretmenler-Gunu-Gecesi-2026-v3.mp4` (2:00, -14,5 LUFS). `kaynak/foto-sahne.py` ile 3 fotoğraf sahnesi eklendi: plaket I (7 baskı), plaket II (4 tekli iki yanda + 2 üç kişilik toplu ortada), ödül (6 baskı + ödül verenlerin toplu fotoğrafı). Her fotoğraf otomatik seviye/orta ton/hafif nötrleme, beyaz polaroid zemin ve gölgeyle, salonun bulanık ışığı önünde vuruşta düşer/kayar/büyür. Plan tipi `{ sahne, b }`; kur.js bölüm sınırında zoom geçişi uygular. Yer açmak için plaket videosu 4 plana, çekiliş videosu 3 plana indi, eğlencede 4 plan 1 vuruş kısaldı.

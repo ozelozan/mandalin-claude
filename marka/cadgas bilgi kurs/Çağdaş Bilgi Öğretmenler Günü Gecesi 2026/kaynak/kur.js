@@ -35,7 +35,8 @@ const runAsync = (args) => new Promise((res, rej) => {
 });
 const src = (c) => `${cfg.kamera}/${c.id}.MP4`;
 // fotoğraf planı: { foto: 'tam/yol.jpg', fy: 0..1 (16:9 bandın dikey konumu), b }
-const cid = (c) => (c.foto ? 'F' + path.basename(c.foto).replace(/\.[^.]+$/, '') + '_' + (c.fy ?? 0.5) + (c.kz ? '_' + c.kz + '_' + c.fx : '') : c.id);
+// fotoğraf sahnesi: { sahne: 'plaket1', b } -> foto-sahne.py ile beyaz zeminli baskı animasyonu
+const cid = (c) => (c.sahne ? 'S' + c.sahne : c.foto ? 'F' + path.basename(c.foto).replace(/\.[^.]+$/, '') + '_' + (c.fy ?? 0.5) + (c.kz ? '_' + c.kz + '_' + c.fx : '') : c.id);
 
 // ---- plan ----
 const plan = [];
@@ -47,7 +48,8 @@ cfg.bolumler.forEach((s, si) => {
     const zout = ci === s.clips.length - 1 && si < cfg.bolumler.length - 1;
     // dosya adı içerikten: plan değişince yalnızca değişen segmentler yeniden işlenir
     const key = [cid(c).replace(/[^A-Za-z0-9]/g, ''), c.ss, f1 - f0, c.hiz || 1, +zin, +zout, idx % 2].join('_');
-    plan.push({ i: idx, si, ci, c, n: f1 - f0, f0, zin, zout, key, file: `${W}/seg/${key}.mp4` });
+    const k2 = c.sahne ? key + '_' + f0 : key;
+    plan.push({ i: idx, si, ci, c, n: f1 - f0, f0, b0: beat, zin, zout, key: k2, file: `${W}/seg/${k2}.mp4` });
     beat += c.b; idx++;
   });
 });
@@ -60,7 +62,7 @@ function olc() {
   const out = fs.existsSync(OLCU) ? JSON.parse(fs.readFileSync(OLCU)) : {};
   for (const p of plan) {
     if (out[p.key] !== undefined) continue;
-    if (p.c.foto) { out[p.key] = null; continue; }
+    if (p.c.foto || p.c.sahne) { out[p.key] = null; continue; }
     const hiz = p.c.hiz || 1;
     const vals = [];
     for (const fr of [0.2, 0.5, 0.8]) {
@@ -143,6 +145,26 @@ function segArgs(p, pass, trf, gam) {
     '-c:v', 'libx264', '-crf', '13', '-preset', 'fast', '-pix_fmt', 'yuv420p', p.file];
 }
 
+async function sahneYap(p) {
+  const ham = p.file.replace('.mp4', '-ham.mp4');
+  await new Promise((res, rej) => {
+    const q = spawn(path.join(process.env.HOME, 'tools/venv-img/bin/python'),
+      [`${KAYNAK}/foto-sahne.py`, p.c.sahne, String(p.b0), String(p.n), ham, String(cfg.bpm), String(cfg.faz)], { stdio: 'inherit' });
+    q.on('close', (c) => (c === 0 ? res() : rej(new Error('foto-sahne ' + c))));
+  });
+  // bölüm sınırındaysa video planlarıyla aynı zoom geçişi (Ken Burns yok: baskılar zaten hareketli)
+  if (!p.zin && !p.zout) { fs.renameSync(ham, p.file); return; }
+  let z = '1';
+  if (p.zin) z += `*(1+${ZAMP}*pow(max(1-on/${ZT}\\,0)\\,3))`;
+  if (p.zout) z += `*(1+${ZAMP}*pow(max((on-${p.n - ZT})/${ZT}\\,0)\\,3))`;
+  const bl = [];
+  if (p.zin) bl.push(`lt(n\\,4)`);
+  if (p.zout) bl.push(`gte(n\\,${p.n - 4})`);
+  await runAsync(['-i', ham, '-vf', `scale=3840:2160:flags=lanczos,zoompan=z='${z}':x='(iw-iw/zoom)/2':y='(ih-ih/zoom)/2':d=1:s=1920x1080:fps=${FPS},boxblur=8:1:enable='${bl.join('+')}',format=yuv420p`,
+    '-frames:v', String(p.n), '-r', String(FPS), '-c:v', 'libx264', '-crf', '13', '-preset', 'fast', '-pix_fmt', 'yuv420p', p.file]);
+  fs.unlinkSync(ham);
+}
+
 async function segmentler() {
   const olcu = JSON.parse(fs.readFileSync(OLCU));
   const only = process.env.ONLY ? process.env.ONLY.split(',').map(Number) : null;   // deneme: ONLY=5,10
@@ -154,6 +176,7 @@ async function segmentler() {
       const p = kuyruk[k++];
       const trf = p.file.replace('.mp4', '.trf');
       if (p.c.foto) { await runAsync(fotoArgs(p)); process.stdout.write('.'); continue; }
+      if (p.c.sahne) { await sahneYap(p); process.stdout.write('.'); continue; }
       await runAsync(segArgs(p, 'detect', trf));
       await runAsync(segArgs(p, 'render', trf, gamma(olcu[p.key])));
       process.stdout.write('.');
