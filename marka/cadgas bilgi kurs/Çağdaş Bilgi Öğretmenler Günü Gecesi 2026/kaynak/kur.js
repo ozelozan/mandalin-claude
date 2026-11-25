@@ -117,9 +117,9 @@ im.crop((x,y,x+bw,y+bh)).resize((3840,2160),Image.LANCZOS).save(sys.argv[2])`, c
 function segArgs(p, pass, trf, gam) {
   const c = p.c, hiz = c.hiz || 1, n = p.n;
   const dur = n * hiz / FPS + 0.3;
-  const pre = hiz === 1
-    ? `tmix=frames=3,select='not(mod(n\\,4))',setpts=N/(${FPS}*TB)`
-    : `tmix=frames=2,select='not(mod(n\\,2))',setpts=N/(${FPS}*TB)`;
+  // 100 fps kaynak: her 4*hiz karede bir kare (hiz 1 = gerçek zaman, 1.5 = hızlı, 0.5 = ağır), kare karışımıyla
+  const adim = Math.round(4 * hiz);
+  const pre = `tmix=frames=${Math.min(adim, 3)},select='not(mod(n\\,${adim}))',setpts=N/(${FPS}*TB)`;
   const a = ['-ss', String(c.ss), '-t', String(dur), '-i', src(c), '-an'];
   if (pass === 'detect') return [...a, '-vf', `${pre},vidstabdetect=shakiness=7:accuracy=15:result=${trf}`, '-f', 'null', '-'];
   const parts = [pre,
@@ -207,23 +207,26 @@ function final() {
   run(['-f', 'lavfi', '-i', 'color=c=black:s=1920x1080,format=rgba', '-vf',
     `geq=r=0:g=0:b=0:a='215*exp(-pow((Y-560)/270\\,2))'`, '-frames:v', '1', `${W}/bant.png`]);
   const [b1, b2, b3] = cfg.baslik;
-  const fo = `(1-${lin(5.6, 0.8)})`;
+  const fo = `(1-${lin(3.8, 0.6)})`;   // başlık yalnız ilk planda (0-4,5 sn)
   // okunaklılık: Montserrat (Türkçe İ dahil), beyaz + gölge, koyu bant; üst satır harf aralıklı
   const sp = (x) => [...x].join('\u200A');
   const golge = 'shadowcolor=black@0.55:shadowx=2:shadowy=3';
   const baslik =
-    `drawtext=fontfile='${MB}':text='${sp(b1)}':fontsize=40:fontcolor=white:${golge}:x=(w-text_w)/2:y='430+12*(1-${ease(1.0, 1.2)})':alpha='${ease(1.0, 1.0)}*${fo}',` +
-    `drawbox=x=(iw-120)/2:y=496:w=120:h=4:color=${KIRMIZI}:t=fill:enable='between(t,1.3,6.4)',` +
-    `drawtext=fontfile='${MX}':text='${b2}':fontsize=108:fontcolor=white:${golge}:x=(w-text_w)/2:y='522+14*(1-${ease(1.5, 1.3)})':alpha='${ease(1.5, 1.1)}*${fo}',` +
-    `drawtext=fontfile='${MB}':text='${b3}':fontsize=42:fontcolor=white:${golge}:x=(w-text_w)/2:y='672+12*(1-${ease(2.3, 1.2)})':alpha='${ease(2.3, 1.0)}*${fo}'`;
+    `drawtext=fontfile='${MB}':text='${sp(b1)}':fontsize=40:fontcolor=white:${golge}:x=(w-text_w)/2:y='430+12*(1-${ease(0.5, 1.0)})':alpha='${ease(0.5, 0.8)}*${fo}',` +
+    `drawbox=x=(iw-120)/2:y=496:w=120:h=4:color=${KIRMIZI}:t=fill:enable='between(t,0.7,4.4)',` +
+    `drawtext=fontfile='${MX}':text='${b2}':fontsize=108:fontcolor=white:${golge}:x=(w-text_w)/2:y='522+14*(1-${ease(0.8, 1.1)})':alpha='${ease(0.8, 0.9)}*${fo}',` +
+    `drawtext=fontfile='${MB}':text='${b3}':fontsize=42:fontcolor=white:${golge}:x=(w-text_w)/2:y='672+12*(1-${ease(1.2, 1.0)})':alpha='${ease(1.2, 0.8)}*${fo}'`;
   const mb = cfg.muzikBas || 0;
-  const muzikF = `[3:a]atrim=${mb}:${mb + cfg.bitisSn},asetpts=PTS-STARTPTS,${mb > 0 ? 'afade=t=in:d=1.5,' : ''}afade=t=out:st=${cfg.bitisSn - (cfg.muzikSonus || 1.2)}:d=${cfg.muzikSonus || 1.2},loudnorm=I=-14:TP=-1.5:LRA=11[a]`;
+  const sonus = cfg.muzikSonus || 1.2;
+  const muzikF = `[0:a]atrim=${mb}:${mb + cfg.bitisSn},asetpts=PTS-STARTPTS,${mb > 0 ? 'afade=t=in:d=1.0,' : ''}loudnorm=I=-15:TP=-2:LRA=11,aresample=48000,aformat=sample_fmts=fltp:channel_layouts=stereo,afade=t=out:st=${(cfg.bitisSn - sonus).toFixed(2)}:d=${sonus}:curve=tri[a]`;
   const filt =
     `[0:v][1:v]xfade=transition=fadewhite:duration=${12 / FPS}:offset=${xoff}[v0];` +
-    `[2:v]format=rgba,fade=in:st=0.4:d=1.0:alpha=1,fade=out:st=5.5:d=1.0:alpha=1[bant];` +
+    `[2:v]format=rgba,fade=in:st=0.1:d=0.6:alpha=1,fade=out:st=3.8:d=0.7:alpha=1[bant];` +
     `[v0][bant]overlay=shortest=1[v1];` +
-    `[v1]${baslik},fade=in:st=0:d=1.0,format=yuv420p[v];` + muzikF;
-  run(['-i', `${W}/govde.mp4`, '-i', `${W}/kart.mp4`, '-loop', '1', '-i', `${W}/bant.png`, '-i', cfg.muzik,
+    `[v1]${baslik},fade=in:st=0:d=0.5,format=yuv420p[v];[3:a]anull[a]`;
+  // ses ayrı işlenir: -frames:v sınırı loudnorm'un geciken sesini kesmesin (v2'de ses 113. sn'de bitiyordu)
+  run(['-i', cfg.muzik, '-filter_complex', muzikF, '-map', '[a]', '-t', String(cfg.bitisSn), '-c:a', 'pcm_s16le', `${W}/muzik.wav`]);
+  run(['-i', `${W}/govde.mp4`, '-i', `${W}/kart.mp4`, '-loop', '1', '-i', `${W}/bant.png`, '-i', `${W}/muzik.wav`,
     '-filter_complex', filt, '-map', '[v]', '-map', '[a]', '-frames:v', String(TOPLAM),
     '-c:v', 'libx264', '-crf', '17', '-preset', 'slow', '-pix_fmt', 'yuv420p',
     '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709',
