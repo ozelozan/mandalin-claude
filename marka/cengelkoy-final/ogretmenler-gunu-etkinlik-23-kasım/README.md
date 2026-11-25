@@ -66,3 +66,4 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Sahneler: açılış (sahne, Öğretmenler Günü ekranı), karşılama (3 farklı misafir), hediye (4), masalar (2x4), konuşmacılar (sunucu, kurucu, solist, mavi gömlekli konuşmacı: tek sahne, farklı kişiler), 16 plaket üst üste birikir + toplu fotoğraf, eğlence (2x4), 4 logolu beyaz kapanış.
 - `fotoğraflar/denemeler kullanma` klasörü kullanılmaz (Ozan adını değiştirdi).
 - v3 (25 Kasım): plaketlere `plaket/zeynep-veysel hoca.jpg` eklendi (b117); plaket dışı sahnelerde giriş animasyonu 11 kare (plaketlerde 18), sahne geçişi 6 kare. Çıktı `cikti/...-Fotograf-Albumu-v3.mp4`.
+- v4 (25 Kasım): kısa sürüm 1:11. Plaket bölümü aynı, diğer sahnelerde baskılar 1-2 vuruşta bir; müzik 56 vuruş ileriden kesintisiz başlar (1,5 sn ses girişi), logo kartı parçanın düşüşüne oturur. `cikti/...-Fotograf-Albumu-v4.mp4`.

@@ -30,38 +30,40 @@ def L4(fotolar, b0, adim=2, tipler=('drop', 'slideR', 'slideL', 'pop')):
     yer = [(500, 330, -4), (1420, 320, 3), (540, 770, 3), (1390, 765, -3)]
     return [(f, x, y, a, 700, b0 + i * adim, tipler[i % 4]) for i, (f, (x, y, a)) in enumerate(zip(fotolar, yer))]
 
+# v4 (25 Kasım): kısa sürüm ~1:12. Plaket bölümü aynı; diğer sahnelerde baskılar 1-2 vuruşta bir gelir.
+# Müzik 56 vuruş ileriden başlar (plan-album.js muzikBas), logo kartı yine parçanın düşüşüne (video b104) oturur.
 SAHNELER = [
-    dict(ad='acilis', b=(0, 18), arka=he('DSC04719'),
-         kart=[(ko('DSC04925'), 960, 560, -2, 1240, 13, 'pop')]),
-    dict(ad='karsilama', b=(18, 30), arka=ka('DSC04693'),
-         kart=[(ka('DSC04690'), 480, 545, -5, 430, 19, 'drop'),
-               (ka('DSC04693'), 960, 520, 3, 430, 22, 'slideR'),
-               (ka('DSC04706'), 1440, 550, -3, 430, 25, 'slideL')]),
-    dict(ad='hediye', b=(30, 48), arka=he('DSC04716'),
-         kart=[(he('DSC04714'), 400, 530, -4, 400, 31, 'drop'),
-               (he('DSC04716'), 800, 560, 3, 400, 34, 'slideL'),
-               (he('DSC04713'), 1180, 520, -2, 400, 37, 'slideR'),
-               (he('DSC04715'), 1560, 555, 4, 400, 40, 'pop')]),
-    dict(ad='masa1', b=(48, 64), arka=ma('DSC04728'),
-         kart=L4([ma('DSC04722'), ma('DSC04728'), ma('DSC04730'), ma('DSC04746')], 49)),
-    dict(ad='masa2', b=(64, 80), arka=ma('DSC04762'),
-         kart=L4([ma('DSC04759'), ma('DSC04762'), ma('DSC04769'), ma('DSC04772')], 65, tipler=('slideL', 'drop', 'pop', 'slideR'))),
-    dict(ad='konusma', b=(80, 100), arka=ko('DSC04925'),
-         kart=[(ko('DSC04784'), 330, 545, -4, 380, 82, 'drop'),
-               (ko('DSC04792'), 750, 520, 3, 380, 85, 'slideL'),
-               (ko('DSC04919'), 1170, 550, -3, 380, 88, 'slideR'),
-               (ko('DSC04927'), 1590, 525, 4, 380, 91, 'pop', 0.38, 0.5, 2 / 3)]),
-    dict(ad='plaket', b=(100, 128), arka=pl('DSC04944'),
+    dict(ad='acilis', b=(0, 16), arka=he('DSC04719'),
+         kart=[(ko('DSC04925'), 960, 560, -2, 1240, 12, 'pop')]),
+    dict(ad='karsilama', b=(16, 24), arka=ka('DSC04693'),
+         kart=[(ka('DSC04690'), 480, 545, -5, 430, 17, 'drop'),
+               (ka('DSC04693'), 960, 520, 3, 430, 19, 'slideR'),
+               (ka('DSC04706'), 1440, 550, -3, 430, 21, 'slideL')]),
+    dict(ad='hediye', b=(24, 34), arka=he('DSC04716'),
+         kart=[(he('DSC04714'), 400, 530, -4, 400, 25, 'drop'),
+               (he('DSC04716'), 800, 560, 3, 400, 27, 'slideL'),
+               (he('DSC04713'), 1180, 520, -2, 400, 29, 'slideR'),
+               (he('DSC04715'), 1560, 555, 4, 400, 31, 'pop')]),
+    dict(ad='masa1', b=(34, 42), arka=ma('DSC04728'),
+         kart=L4([ma('DSC04722'), ma('DSC04728'), ma('DSC04730'), ma('DSC04746')], 35, adim=1)),
+    dict(ad='masa2', b=(42, 50), arka=ma('DSC04762'),
+         kart=L4([ma('DSC04759'), ma('DSC04762'), ma('DSC04769'), ma('DSC04772')], 43, adim=1, tipler=('slideL', 'drop', 'pop', 'slideR'))),
+    dict(ad='konusma', b=(50, 60), arka=ko('DSC04925'),
+         kart=[(ko('DSC04784'), 330, 545, -4, 380, 51, 'drop'),
+               (ko('DSC04792'), 750, 520, 3, 380, 53, 'slideL'),
+               (ko('DSC04919'), 1170, 550, -3, 380, 55, 'slideR'),
+               (ko('DSC04927'), 1590, 525, 4, 380, 57, 'pop', 0.38, 0.5, 2 / 3)]),
+    dict(ad='plaket', b=(60, 88), arka=pl('DSC04944'),
          kart=[(pl(n), [250, 615, 980, 1345, 1710][i % 5] + (60 if (i // 5) % 2 else 0),
-                [400, 690, 470, 650][(i // 5) % 4], [-5, 3, -2, 4, -3, 2][i % 6], 330, 101 + i, TIP[i % 4])
+                [400, 690, 470, 650][(i // 5) % 4], [-5, 3, -2, 4, -3, 2][i % 6], 330, 61 + i, TIP[i % 4])
                for i, n in enumerate(['DSC04931', 'DSC04934', 'DSC04936', 'DSC04940', 'DSC04944', 'DSC04945', 'DSC04948', 'DSC04950',
                                       'DSC04952', 'DSC04955', 'DSC04958', 'DSC04959', 'DSC04962', 'DSC04965', 'DSC04966', 'DSC04970'])]
-         + [(FO + 'plaket/zeynep-veysel hoca.jpg', 1100, 560, 3, 360, 117, 'drop')]   # Zeynep ve Veysel Hoca
-         + [(EV + '/cikti/fotograf/DSC04988-2A-bufe-dekor.jpg', 960, 560, -1.5, 1300, 120, 'drop')]),
-    dict(ad='eglence1', b=(128, 144), arka=eg('DSC04869'),
-         kart=L4([eg('DSC04864'), eg('DSC04862'), eg('DSC04869'), eg('DSC04883')], 129)),
-    dict(ad='eglence2', b=(144, 160), arka=eg('DSC04894'),
-         kart=L4([eg('DSC04894'), eg('DSC04895'), eg('DSC04912'), eg('DSC04899')], 145, tipler=('pop', 'slideL', 'slideR', 'drop'))),
+         + [(FO + 'plaket/zeynep-veysel hoca.jpg', 1100, 560, 3, 360, 77, 'drop')]   # Zeynep ve Veysel Hoca
+         + [(EV + '/cikti/fotograf/DSC04988-2A-bufe-dekor.jpg', 960, 560, -1.5, 1300, 80, 'drop')]),
+    dict(ad='eglence1', b=(88, 96), arka=eg('DSC04869'),
+         kart=L4([eg('DSC04864'), eg('DSC04862'), eg('DSC04869'), eg('DSC04883')], 89, adim=1)),
+    dict(ad='eglence2', b=(96, 104), arka=eg('DSC04894'),
+         kart=L4([eg('DSC04894'), eg('DSC04895'), eg('DSC04912'), eg('DSC04899')], 97, adim=1, tipler=('pop', 'slideL', 'slideR', 'drop'))),
 ]
 
 
@@ -207,4 +209,4 @@ if __name__ == '__main__':
         lf = W_ + '/album/liste.txt'
         open(lf, 'w').write('\n'.join(f"file '{o}'" for o, _ in sonuc))
         subprocess.run([FFMPEG, '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', lf, '-c', 'copy', W_ + '/govde.mp4'], check=True)
-        print('govde kare', sum(nn for _, nn in sonuc), 'beklenen', F(160))
+        print('govde kare', sum(nn for _, nn in sonuc), 'beklenen', F(SAHNELER[-1]['b'][1]))

@@ -210,7 +210,8 @@ function final() {
     `drawbox=x=(iw-90)/2:y=500:w=90:h=2:color=white@0.75:t=fill:enable='between(t,1.3,6.4)',` +
     `drawtext=fontfile='${GEO_I}':text='${b2}':fontsize=104:fontcolor=white:shadowcolor=black@0.5:shadowx=2:shadowy=3:x=(w-text_w)/2:y='522+14*(1-${ease(1.5, 1.3)})':alpha='${ease(1.5, 1.1)}*${fo}',` +
     `drawtext=fontfile='${GEO}':text='${b3}':fontsize=40:fontcolor=white@0.9:x=(w-text_w)/2:y='668+12*(1-${ease(2.3, 1.2)})':alpha='${ease(2.3, 1.0)}*${fo}'`;
-  const muzikF = `[3:a]atrim=0:${cfg.bitisSn},asetpts=PTS-STARTPTS,afade=t=out:st=${cfg.bitisSn - (cfg.muzikSonus || 1.2)}:d=${cfg.muzikSonus || 1.2},loudnorm=I=-14:TP=-1.5:LRA=11[a]`;
+  const mb = cfg.muzikBas || 0;
+  const muzikF = `[3:a]atrim=${mb}:${mb + cfg.bitisSn},asetpts=PTS-STARTPTS,${mb > 0 ? 'afade=t=in:d=1.5,' : ''}afade=t=out:st=${cfg.bitisSn - (cfg.muzikSonus || 1.2)}:d=${cfg.muzikSonus || 1.2},loudnorm=I=-14:TP=-1.5:LRA=11[a]`;
   const filt =
     `[0:v][1:v]xfade=transition=fadewhite:duration=${12 / FPS}:offset=${xoff}[v0];` +
     `[2:v]format=rgba,fade=in:st=0.4:d=1.0:alpha=1,fade=out:st=5.5:d=1.0:alpha=1[bant];` +
