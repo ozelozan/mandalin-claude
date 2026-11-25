@@ -35,7 +35,7 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Kaynak: C0073 (sunucunun çağrısı) + C0074 (konuşma). Kesimler faster-whisper kelime zamanlarına göre.
 - Sunucu kamerası savrulan anlarda ses sürer, görüntü salona geçer.
 - Çıkanlar: baştaki "Şimdi…" ve bekleme, sunucunun "dokuzuncu" demesini düzelten "kimine göre dokuz, on" bölümü, uzun alkış ve sessizlik boşlukları.
-- Aynı kameradaki kesimlerde kadraj 1.0 / 1.12 dönüşümlü (sıçrama hissi olmasın). İsim yazısı: "Ertuğ Ertaş / Kurucu, Final Okulları".
+- Aynı kameradaki kesimlerde kadraj 1.0 / 1.12 dönüşümlü (sıçrama hissi olmasın). İsim yazısı: "Ertuğ Ertaş / Kurucu" (v4, 25 Kasım: "Final Okulları" ibaresi çıkarıldı; son sürüm `cikti/Kurucu-Ertug-Ertas-Ogretmenler-Gunu-Konusmasi-v4.mp4`).
 - Ses: konuşma -16 LUFS, tepe -2 dBTP. Sonda alkış, ardından fon müziğinin son ölçüleriyle 4 logolu beyaz kart.
 
 ## Fotoğraf: DSC04988-2A büfe dekoru

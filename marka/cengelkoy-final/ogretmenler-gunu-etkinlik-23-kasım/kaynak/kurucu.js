@@ -123,7 +123,7 @@ function final(dosyalar) {
   const isim =
     `drawbox=x=120:y=872:w='70*${ease(i0, 0.7)}':h=3:color=0xE30A17:t=fill:enable='between(t,${i0},${i0 + 5.2})',` +
     `drawtext=fontfile='${GEO_B}':text='Ertuğ Ertaş':fontsize=60:fontcolor=white:shadowcolor=black@0.45:shadowx=2:shadowy=2:x=120:y='892+12*(1-${ease(i0 + 0.1, 0.8)})':alpha='${ease(i0 + 0.1, 0.6)}*${fo}',` +
-    `drawtext=fontfile='${GEO_I}':text='Kurucu, Final Okulları':fontsize=36:fontcolor=white@0.92:shadowcolor=black@0.45:shadowx=2:shadowy=2:x=122:y='968+12*(1-${ease(i0 + 0.35, 0.8)})':alpha='${ease(i0 + 0.35, 0.6)}*${fo}'`;
+    `drawtext=fontfile='${GEO_I}':text='Kurucu':fontsize=36:fontcolor=white@0.92:shadowcolor=black@0.45:shadowx=2:shadowy=2:x=122:y='968+12*(1-${ease(i0 + 0.35, 0.8)})':alpha='${ease(i0 + 0.35, 0.6)}*${fo}'`;
   const [kf, ks, kd] = ALKIS_KUYRUK;
   const kartSn = (KART_N + XF) / FPS;
   const filt =
