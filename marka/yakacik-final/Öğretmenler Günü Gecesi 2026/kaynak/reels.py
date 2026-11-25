@@ -82,6 +82,7 @@ class Kaynak:
 
 
 KY = Kaynak()
+ALT_GRAD = Image.linear_gradient('L').resize((W, H)).point(lambda v: max(0, (v - 175) * 160 // 80))
 CT, CB_ = (260, 980), (1160, 1880)   # üst bant sticker için boş kalır   # çift düzende üst ve alt fotoğrafın y aralığı (1080x720)
 
 
@@ -106,6 +107,64 @@ def sticker():
 
 STK = None
 LOGO_IM = None
+ALT_LOGO = None
+ZEMIN = None
+ROZET = YK + '/Öğretmenler Günü Gecesi 2026/sticker/rozet-b.png'   # GPT 2.6 ile üretilen 3B rozet
+
+
+def zemin():
+    z = Image.new('RGB', (W, H), NAVY)
+    v = Image.new('L', (W, H), 0)
+    ImageDraw.Draw(v).ellipse((-500, 200, W + 500, H - 100), fill=255)
+    acik = Image.new('RGB', (W, H), (34, 46, 112))
+    return Image.composite(acik, z, v.filter(ImageFilter.GaussianBlur(260)))
+
+
+def alt_logo():
+    """amblem kendi renginde + yazı beyaz, yan yana (plakasız, Ozan'ın kuralı)"""
+    em = Image.open(YK + '/logo/logo-isaret.png').convert('RGBA'); em = em.crop(em.split()[3].getbbox())
+    yz = Image.open(YK + '/logo/logo-yazi.png').convert('RGBA'); yz = yz.crop(yz.split()[3].getbbox())
+    beyaz = Image.new('RGBA', yz.size, WHITE + (255,)); beyaz.putalpha(yz.split()[3]); yz = beyaz
+    h = 92
+    em = em.resize((round(em.width * h / em.height), h), Image.LANCZOS)
+    th = 60
+    yz = yz.resize((round(yz.width * th / yz.height), th), Image.LANCZOS)
+    tv = Image.new('RGBA', (em.width + 18 + yz.width, h), (0, 0, 0, 0))
+    tv.paste(em, (0, 0), em); tv.paste(yz, (em.width + 18, (h - th) // 2), yz)
+    return tv
+
+
+def hazirla():
+    global STK, LOGO_IM, ALT_LOGO, ZEMIN
+    r = Image.open(ROZET).convert('RGBA'); r = r.crop(r.split()[3].getbbox())
+    STK = r.resize((250, round(250 * r.height / r.width)), Image.LANCZOS)
+    lg = Image.open(LOGO).convert('RGBA'); lg = lg.crop(lg.split()[3].getbbox())
+    LOGO_IM = lg.resize((420, round(420 * lg.height / lg.width)), Image.LANCZOS)
+    ALT_LOGO = alt_logo()
+    ZEMIN = zemin()
+
+
+def rozet_kare(t):
+    """hareketli rozet: dönerek gelir, süzülür, her 4 vuruşta nabız, 8 vuruşta bir parlama, hafif 3B salınım"""
+    gir = min(max(t / 0.7, 0), 1)
+    sx = abs(math.cos((1 - ease(gir)) * math.pi * 1.5)) if gir < 1 else 1.0      # Y ekseninde dönerek açılır
+    sx = sx * (0.92 + 0.08 * math.cos(t * 1.6))                                   # sürekli hafif 3B salınım
+    vur = (t % (4 * B)) / (4 * B)
+    nab = 1 + 0.07 * math.exp(-vur * 9)
+    s = (0.4 + 0.6 * ease(gir)) * nab
+    w, h = max(2, round(STK.width * s * sx)), max(2, round(STK.height * s))
+    im = STK.resize((w, h), Image.BICUBIC)
+    pp = (t % (8 * B)) / (8 * B)
+    if 0.05 < pp < 0.35 and gir >= 1:                                              # parlama şeridi
+        u = (pp - 0.05) / 0.3
+        bant = Image.new('L', (w, h), 0)
+        cx = -0.4 * w + u * 1.8 * w
+        ImageDraw.Draw(bant).polygon([(cx, 0), (cx + w * 0.18, 0), (cx - w * 0.12, h), (cx - w * 0.30, h)], fill=150)
+        bant = ImageChops.multiply(bant.filter(ImageFilter.GaussianBlur(w * 0.03)), im.split()[3])
+        im = Image.composite(Image.new('RGBA', (w, h), (255, 255, 255, 255)), im, bant)
+    a = 6 * math.sin(t * 1.3)
+    im = im.rotate(a, resample=Image.BICUBIC, expand=True)
+    return im, 8 * math.sin(t * 2.2)
 
 
 def cekim_kare(i, t):
@@ -128,27 +187,37 @@ def cekim_kare(i, t):
             lg.putalpha(lg.split()[3].point(lambda v: int(v * e)))
         tv.paste(lg, ((W - lg.width) // 2, (H - lg.height) // 2 - 40), lg)
         return tv
-    # çift: lacivert zemin, üstte foto, ortada bant, altta foto 2 vuruş sonra sağdan kayarak
-    tv = Image.new('RGB', (W, H), NAVY)
+    # çift (v2): lacivert zemin, iki beyaz çerçeveli baskı; üstteki çekimle gelir, alttaki 1 vuruş sonra
+    # sağdan hızlı kayar; ikisi de sahnede hafifçe süzülür (yüzme + çok küçük dönme)
+    tv = ZEMIN.copy()
     lt = t - t0
-    a, bb = KY.get(c['fotolar'][0], 1080, 720), KY.get(c['fotolar'][1], 1080, 720)
-    tv.paste(kb(a, 1080, 720, q, True), (0, CT[0]))
-    gir = min(max((lt - 2 * B + 0.36) / 0.36, 0), 1)       # alt foto: 2. vuruşa oturur
-    if gir > 0:
-        x = round((1 - ease(gir)) * 1080)
-        tv.paste(kb(bb, 1080, 720, q, False), (x, CB_[0]))
-    d = ImageDraw.Draw(tv)
-    d.rectangle((0, CT[1], W, CB_[0]), fill=NAVY)
-    d.rectangle((0, CT[1] + 6, round(W * ease(min(max(lt / 0.8, 0), 1))), CT[1] + 12), fill=RED)
+    for k, (yol, cx, cy, aci, gecik, yon) in enumerate([(c['fotolar'][0], 540, 640, -2.0, 0.0, -1),
+                                                         (c['fotolar'][1], 540, 1325, 2.0, B, 1)]):
+        g = min(max((lt - gecik + 0.12) / 0.26, 0), 1) if (k == 1 or i > 0) else 1.0
+        if k == 0 and i > 0:
+            g = 1.0          # üst baskı geçişle birlikte gelir
+        if g <= 0:
+            continue
+        e = 1 + 2.4 * (g - 1) ** 3 + 1.4 * (g - 1) ** 2 if g < 1 else 1.0   # geri sekmeli
+        foto = kb(KY.get(yol, 920, 613), 920, 613, q, k == 0)
+        bask = Image.new('RGB', (960, 653), (250, 249, 246)); bask.paste(foto, (20, 20))
+        faz = i * 1.7 + k * 2.1
+        a = aci + 0.6 * math.sin(lt * 2.4 + faz) + (1 - e) * 10 * yon
+        x = cx + (1 - e) * 1150 * yon + 5 * math.sin(lt * 1.9 + faz)
+        y = cy + 7 * math.sin(lt * 2.6 + faz)
+        r = bask.convert('RGBA').rotate(a, resample=Image.BICUBIC, expand=True)
+        golge = Image.new('RGBA', r.size, (0, 0, 0, 0))
+        golge.putalpha(r.split()[3].point(lambda v: v * 110 // 255).filter(ImageFilter.GaussianBlur(14)))
+        tv.paste(golge, (round(x - r.width / 2 + 10), round(y - r.height / 2 + 16)), golge)
+        tv.paste(r, (round(x - r.width / 2), round(y - r.height / 2)), r)
     if c['baslik']:
-        al = ease(min(max((lt - 0.3) / 0.6, 0), 1))
-        f1 = ImageFont.truetype(F_BI, 58)
-        f2 = ImageFont.truetype(F_B, 30)
-        katman = Image.new('RGBA', (W, CB_[0] - CT[1]), (0, 0, 0, 0))
+        al = ease(min(max((lt - 0.2) / 0.5, 0), 1))
+        katman = Image.new('RGBA', (W, 200), (0, 0, 0, 0))
         dk = ImageDraw.Draw(katman)
-        dk.text((W / 2, 78), 'Öğretmenler Günü Gecesi', font=f1, fill=WHITE + (int(255 * al),), anchor='mm')
-        dk.text((W / 2, 138), '23 KASIM 2026', font=f2, fill=(230, 232, 240, int(255 * al)), anchor='mm')
-        tv.paste(katman, (0, CT[1] + round((1 - al) * 14)), katman)
+        dk.text((70, 70), 'Öğretmenler Günü Gecesi', font=ImageFont.truetype(F_BI, 50), fill=WHITE + (int(255 * al),), anchor='lm')
+        dk.rectangle((70, 112, 70 + round(110 * al), 117), fill=RED + (int(255 * al),))
+        dk.text((70, 146), '23 KASIM 2026', font=ImageFont.truetype(F_B, 28), fill=(225, 228, 240, int(255 * al)), anchor='lm')
+        tv.paste(katman, (0, 110), katman)
     return tv
 
 
@@ -215,23 +284,26 @@ def kare(f):
                 tv = gecis(tip, cekim_kare(j - 1, t), cekim_kare(j, t), p)
     if tv is None:
         tv = cekim_kare(i, t)
-    # sticker: logo kartına kadar sabit, ilk saniyede hafif büyüyerek gelir
     logo_t = CEKIM[-1]['b0'] * B
-    a = min(max(t / 0.4, 0), 1) * (1 - min(max((t - (logo_t - 0.25)) / 0.25, 0), 1))
-    if a > 0:
-        s = STK if a >= 1 else STK.resize((max(1, round(STK.width * (0.7 + 0.3 * a))), max(1, round(STK.height * (0.7 + 0.3 * a)))), Image.BICUBIC)
-        if a < 1:
-            s = s.copy(); s.putalpha(s.split()[3].point(lambda v: int(v * a)))
-        tv.paste(s, (round(930 - s.width / 2), round(178 - s.height / 2)), s)   # sağ üst, Reels başlığının altında
+    cik = 1 - min(max((t - (logo_t - 0.2)) / 0.2, 0), 1)
+    if cik > 0:
+        # tam ekran plaketlerde logonun okunması için alttan yumuşak koyulaşma (plaka değil)
+        if CEKIM[i]['tip'] == 'tek':
+            tv.paste((8, 10, 30), (0, 0), ALT_GRAD)
+        al = ALT_LOGO if cik >= 1 else ALT_LOGO.copy()
+        if cik < 1:
+            al.putalpha(al.split()[3].point(lambda v: int(v * cik)))
+        tv.paste(al, ((W - al.width) // 2, 1760 - al.height // 2), al)
+        rz, dy = rozet_kare(t)
+        if cik < 1:
+            rz.putalpha(rz.split()[3].point(lambda v: int(v * cik)))
+        tv.paste(rz, (round(905 - rz.width / 2), round(185 + dy - rz.height / 2)), rz)
     return tv
 
 
 def parca(arg):
     k, f0, f1, out = arg
-    global STK, LOGO_IM
-    STK = sticker()
-    lg = Image.open(LOGO).convert('RGBA'); lg = lg.crop(lg.split()[3].getbbox())
-    LOGO_IM = lg.resize((420, round(420 * lg.height / lg.width)), Image.LANCZOS)   # dengeli: ~1/2.5 genişlik
+    hazirla()
     pr = subprocess.Popen([FFMPEG, '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
                            '-c:v', 'libx264', '-crf', '14', '-preset', 'fast', '-pix_fmt', 'yuv420p', out], stdin=subprocess.PIPE)
     for f in range(f0, f1):

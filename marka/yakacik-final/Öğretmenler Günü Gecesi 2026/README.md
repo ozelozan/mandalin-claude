@@ -10,3 +10,8 @@
 - Sağ üstte sabit "9. YILIMIZ" sticker'ı (lacivert, kırmızı halka, beyaz kenar), logo kartında kaybolur.
 - Not: 4749, 4751, 4752 arka planında içki rafı var; Ozan böyle kalsın dedi.
 - Açıklama metni: `instagram-aciklama.txt`.
+
+## v2 (25 Kasım) → `cikti/Yakacik-Final-Ogretmenler-Gunu-Gecesi-2026-Reels-v2.mp4`
+- Masa sahneleri: iki fotoğraf beyaz çerçeveli baskı (hafif eğik, gölgeli); üstteki geçişle, alttaki 1 vuruş sonra sağdan geri sekmeli gelir; ikisi de sahnede sürekli hafifçe süzülür. Başlık üst sol.
+- Her sahnede alt ortada Yakacık Final logosu (amblem kendi renginde, yazı beyaz, plakasız); plaketlerde okunurluk için alttan yumuşak koyulaşma.
+- "9. YILIMIZ" rozeti: Magnific GPT 2.6 (ChatGPT görsel modeli) ile 3B, şeffaf zeminli üretildi (`sticker/rozet-b.png`, a/c seçilmeyen alternatifler; Mini_MAN klasöründe). Videoda dönerek açılır, süzülür, 4 vuruşta bir nabız, 8 vuruşta bir parlama, hafif 3B salınım.
