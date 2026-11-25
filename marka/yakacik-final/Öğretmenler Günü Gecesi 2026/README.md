@@ -15,3 +15,9 @@
 - Masa sahneleri: iki fotoğraf beyaz çerçeveli baskı (hafif eğik, gölgeli); üstteki geçişle, alttaki 1 vuruş sonra sağdan geri sekmeli gelir; ikisi de sahnede sürekli hafifçe süzülür. Başlık üst sol.
 - Her sahnede alt ortada Yakacık Final logosu (amblem kendi renginde, yazı beyaz, plakasız); plaketlerde okunurluk için alttan yumuşak koyulaşma.
 - "9. YILIMIZ" rozeti: Magnific GPT 2.6 (ChatGPT görsel modeli) ile 3B, şeffaf zeminli üretildi (`sticker/rozet-b.png`, a/c seçilmeyen alternatifler; Mini_MAN klasöründe). Videoda dönerek açılır, süzülür, 4 vuruşta bir nabız, 8 vuruşta bir parlama, hafif 3B salınım.
+
+## v3 (25 Kasım 2026)
+- Rozet "7. YILIMIZ" oldu (Ozan'ın düzeltmesi; 9 yanlıştı). `sticker/rozet-7.png`, rozet-b referans alınarak GPT 2.6 ile üretildi (7a seçildi, 7b alternatif). Açıklama metni de 7. yıla göre düzeltildi.
+- Ozan 6 masa karesi ekledi (`fotoğraflar/denemeler kullanma/` içinde 4-, 5-, 7-, 8-, 9-, 10- önekli, yalnız okunur). 5'i eski karelerin birkaç saniye arayla çekilmiş ikizi çıktı (4766~4767, 4763~4764, 4736~4737, 4733~4731, 4729~4730): aynı masa iki kez görünmesin diye ikizlerin yerine Ozan'ın seçtiği kareler geçti, 4739 yeni olarak tek büyük baskıyla eklendi.
+- Masa sahneleri: 6 sahne (5 çift + 1 tek), 8/6/6/6/6/8 vuruş; plaketler 5 vuruş; logo kartı yine 45. sn. Süre 48 sn (müzik 48 sn).
+- Çıktı `cikti/Yakacik-Final-Ogretmenler-Gunu-Gecesi-2026-Reels-v3.mp4`.

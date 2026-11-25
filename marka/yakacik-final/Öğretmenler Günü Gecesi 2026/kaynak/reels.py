@@ -2,8 +2,8 @@
 # Kullanım: python3 reels.py <çalışma-klasörü> <çıktı.mp4>
 # Fotoğraflar Çengelköy Final etkinlik klasöründen (Ozan'ın seçimi); müzik: muzik/fon-muzigi-hareketli.mp3
 # (Magnific / ElevenLabs Music v2, sözsüz, 120 BPM, vuruşlar 0.5 sn katlarında, son vuruş 47.0 sn).
-# Yapı: 5 masa kolajı (iki yatay fotoğraf üst üste, 8 vuruş), 10 plaket (dikey tam ekran, 5 vuruş),
-# b90'da (45 sn) beyaz flaşla yalnızca Yakacık Final logosu. Köşede sabit "9. Yılımız" sticker'ı.
+# Yapı (v3): 6 masa sahnesi (çerçeveli baskılar; 5 çift + 1 tek, 8/6/6/6/6/8 vuruş), 10 plaket (dikey tam ekran, 5 vuruş),
+# b90'da (45 sn) beyaz flaşla yalnızca Yakacık Final logosu. Köşede sabit "7. Yılımız" rozeti'ı.
 import sys, os, math, subprocess
 from multiprocessing import Pool
 from PIL import Image, ImageOps, ImageFilter, ImageEnhance, ImageDraw, ImageFont, ImageChops
@@ -22,20 +22,24 @@ F_BI = '/System/Library/Fonts/Supplemental/Arial Bold Italic.ttf'
 F_BL = '/System/Library/Fonts/Supplemental/Arial Black.ttf'
 F_B = '/System/Library/Fonts/Supplemental/Arial Bold.ttf'
 ma = lambda n: EV + 'masada fotoğraflar/DSC0' + str(n) + '.JPG'
+dn = lambda on, n: EV + 'denemeler kullanma/' + on + 'DSC0' + str(n) + '.JPG'
 pl = lambda n: EV + 'plaket/DSC0' + str(n) + '.JPG'
 
 # ---- plan (vuruş cinsinden) ----
 CEKIM = []
 b = 0
-for i, (a_, c_) in enumerate([(4731, 4737), (4730, 4738), (4749, 4751), (4752, 4764), (4767, 4769)]):
-    CEKIM.append(dict(tip='cift', fotolar=[ma(a_), ma(c_)], b0=b, b1=b + 8, baslik=(i == 0)))
-    b += 8
+# v3: Ozan'ın seçtiği kareler (ham halleri 'denemeler kullanma' içinde 4-,5-,7-,8-,9-,10- önekli; yalnız okunur).
+# 5'i eski masa karelerinin ikizi (4766~4767, 4763~4764, 4736~4737, 4733~4731, 4729~4730): ikizlerin yerine geçti; 4739 yeni, tek baskı.
+for i, (fl, u) in enumerate([([dn('9-', 4733), dn('8-', 4736)], 8), ([dn('10-', 4729), ma(4738)], 6), ([dn('4-', 4766), dn('5-', 4763)], 6),
+                             ([dn('7-', 4739)], 6), ([ma(4749), ma(4751)], 6), ([ma(4752), ma(4769)], 8)]):
+    CEKIM.append(dict(tip='cift', fotolar=fl, b0=b, b1=b + u, baslik=(i == 0)))
+    b += u
 # plaketler Ozan'ın sırasıyla: 1. kurucu, 2. kurucu, 5, 6
 for n in [4931, 4934, 4940, 4944, 4945, 4948, 4955, 4958, 4950, 4952]:
     CEKIM.append(dict(tip='tek', fotolar=[pl(n)], b0=b, b1=b + 5))   # 2.5 sn
     b += 5
 CEKIM.append(dict(tip='logo', fotolar=[], b0=b, b1=SURE / B))
-GECIS = ['whip', 'serit', 'zoom', 'iris', 'yukari', 'whip', 'flash', 'zoom', 'serit', 'iris', 'whip', 'yukari', 'zoom', 'serit', 'flash']
+GECIS = ['whip', 'serit', 'zoom', 'iris', 'yukari', 'whip', 'flash', 'zoom', 'serit', 'iris', 'whip', 'yukari', 'zoom', 'serit', 'flash', 'iris', 'whip', 'yukari']
 TD = 8   # geçiş kare sayısı
 
 
@@ -100,7 +104,7 @@ def sticker():
     f1 = ImageFont.truetype(F_BL, 80)
     f2 = ImageFont.truetype(F_B, 21)
     cx = o + s / 2
-    d.text((cx + 4, o + s * 0.43), '9.', font=f1, fill=WHITE, anchor='mm')
+    d.text((cx + 4, o + s * 0.43), '7.', font=f1, fill=WHITE, anchor='mm')
     d.text((cx, o + s * 0.74), 'YILIMIZ', font=f2, fill=WHITE, anchor='mm')
     return im.rotate(-8, resample=Image.BICUBIC, expand=True)
 
@@ -109,7 +113,7 @@ STK = None
 LOGO_IM = None
 ALT_LOGO = None
 ZEMIN = None
-ROZET = YK + '/Öğretmenler Günü Gecesi 2026/sticker/rozet-b.png'   # GPT 2.6 ile üretilen 3B rozet
+ROZET = YK + '/Öğretmenler Günü Gecesi 2026/sticker/rozet-7.png'   # GPT 2.6 ile üretilen 3B rozet (v3: 7. yıl)
 
 
 def zemin():
@@ -191,16 +195,19 @@ def cekim_kare(i, t):
     # sağdan hızlı kayar; ikisi de sahnede hafifçe süzülür (yüzme + çok küçük dönme)
     tv = ZEMIN.copy()
     lt = t - t0
-    for k, (yol, cx, cy, aci, gecik, yon) in enumerate([(c['fotolar'][0], 540, 640, -2.0, 0.0, -1),
-                                                         (c['fotolar'][1], 540, 1325, 2.0, B, 1)]):
+    yerler = [(c['fotolar'][0], 540, 640, -2.0, 0.0, -1), (c['fotolar'][1], 540, 1325, 2.0, B, 1)] if len(c['fotolar']) == 2 \
+        else [(c['fotolar'][0], 540, 960, -1.5, 0.0, -1)]   # tek masa fotoğrafı: ortada büyük baskı
+    olc = 1.0 if len(c['fotolar']) == 2 else 1.08
+    for k, (yol, cx, cy, aci, gecik, yon) in enumerate(yerler):
         g = min(max((lt - gecik + 0.12) / 0.26, 0), 1) if (k == 1 or i > 0) else 1.0
         if k == 0 and i > 0:
             g = 1.0          # üst baskı geçişle birlikte gelir
         if g <= 0:
             continue
         e = 1 + 2.4 * (g - 1) ** 3 + 1.4 * (g - 1) ** 2 if g < 1 else 1.0   # geri sekmeli
-        foto = kb(KY.get(yol, 920, 613), 920, 613, q, k == 0)
-        bask = Image.new('RGB', (960, 653), (250, 249, 246)); bask.paste(foto, (20, 20))
+        fw, fh = round(920 * olc), round(613 * olc)
+        foto = kb(KY.get(yol, fw, fh), fw, fh, q, k == 0)
+        bask = Image.new('RGB', (fw + 40, fh + 40), (250, 249, 246)); bask.paste(foto, (20, 20))
         faz = i * 1.7 + k * 2.1
         a = aci + 0.6 * math.sin(lt * 2.4 + faz) + (1 - e) * 10 * yon
         x = cx + (1 - e) * 1150 * yon + 5 * math.sin(lt * 1.9 + faz)
