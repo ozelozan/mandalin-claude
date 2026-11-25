@@ -65,3 +65,4 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Ozan v1 kolajları beğenmedi. v2: her fotoğraf beyaz çerçeveli baskı, sahnenin bulanık ışığı önüne vuruşta düşer/kayar/büyür, albüm gibi birikir; sahne geçişi öne büyüyüp kararma.
 - Sahneler: açılış (sahne, Öğretmenler Günü ekranı), karşılama (3 farklı misafir), hediye (4), masalar (2x4), konuşmacılar (sunucu, kurucu, solist, mavi gömlekli konuşmacı: tek sahne, farklı kişiler), 16 plaket üst üste birikir + toplu fotoğraf, eğlence (2x4), 4 logolu beyaz kapanış.
 - `fotoğraflar/denemeler kullanma` klasörü kullanılmaz (Ozan adını değiştirdi).
+- v3 (25 Kasım): plaketlere `plaket/zeynep-veysel hoca.jpg` eklendi (b117); plaket dışı sahnelerde giriş animasyonu 11 kare (plaketlerde 18), sahne geçişi 6 kare. Çıktı `cikti/...-Fotograf-Albumu-v3.mp4`.

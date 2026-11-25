@@ -13,9 +13,9 @@ F = lambda k: 0 if k == 0 else round((FAZ + B * k) * FPS)
 EV = '/Volumes/Mini_MAN/mandalin-claude/marka/cengelkoy-final/ogretmenler-gunu-etkinlik-23-kasım'
 FO = EV + '/fotoğraflar/'
 FFMPEG = os.path.expanduser('~/tools/bin/ffmpeg')
-DUR = 18          # giriş animasyonu kare sayısı
-LAND = 11         # vuruşa oturan kare (animasyon içinde)
-ZT = 8            # sahne geçişi kare sayısı
+DUR, LAND = 11, 7     # giriş animasyonu kare sayısı / vuruşa oturan kare (Ozan: plaket dışı sahneler daha hızlı)
+DUR_PL, LAND_PL = 18, 11   # plaketlerde eski, daha yumuşak hız
+ZT = 6            # sahne geçişi kare sayısı
 
 ka = lambda n: FO + 'karsilama/' + n + '.JPG'
 he = lambda n: FO + 'hediye/' + n + '.JPG'
@@ -56,6 +56,7 @@ SAHNELER = [
                 [400, 690, 470, 650][(i // 5) % 4], [-5, 3, -2, 4, -3, 2][i % 6], 330, 101 + i, TIP[i % 4])
                for i, n in enumerate(['DSC04931', 'DSC04934', 'DSC04936', 'DSC04940', 'DSC04944', 'DSC04945', 'DSC04948', 'DSC04950',
                                       'DSC04952', 'DSC04955', 'DSC04958', 'DSC04959', 'DSC04962', 'DSC04965', 'DSC04966', 'DSC04970'])]
+         + [(FO + 'plaket/zeynep-veysel hoca.jpg', 1100, 560, 3, 360, 117, 'drop')]   # Zeynep ve Veysel Hoca
          + [(EV + '/cikti/fotograf/DSC04988-2A-bufe-dekor.jpg', 960, 560, -1.5, 1300, 120, 'drop')]),
     dict(ad='eglence1', b=(128, 144), arka=eg('DSC04869'),
          kart=L4([eg('DSC04864'), eg('DSC04862'), eg('DSC04869'), eg('DSC04883')], 129)),
@@ -121,10 +122,10 @@ def ease_out_back(t, s=1.4): t -= 1; return 1 + t * t * ((s + 1) * t + s)
 
 def poz(k, f):
     """kart k için f karesindeki (x, y, açı, ölçek, opaklık); görünmüyorsa None"""
-    t0 = k['iner'] - LAND
+    t0 = k['iner'] - k['land']
     if f < t0:
         return None
-    p = min((f - t0) / DUR, 1.0)
+    p = min((f - t0) / k['dur'], 1.0)
     x, y, a, s, o = k['x'], k['y'], k['a'], 1.0, 1.0
     if p < 1:
         e = ease_out_back(p, 1.2)
@@ -164,7 +165,8 @@ def sahne_render(i):
     for kk in sc['kart']:
         yol, x, y, a, gen, iner, tip = kk[:7]
         fx, fy, oran = (kk[7], kk[8], kk[9]) if len(kk) > 7 else (0.5, 0.4, None)
-        kartlar.append(dict(img=kart_yap(yol, gen, fx, fy, oran), x=x, y=y, a=a, iner=F(iner) - f0, tip=tip, ob={}))
+        kartlar.append(dict(img=kart_yap(yol, gen, fx, fy, oran), x=x, y=y, a=a, iner=F(iner) - f0, tip=tip, ob={},
+                            dur=DUR_PL if sc['ad'] == 'plaket' else DUR, land=LAND_PL if sc['ad'] == 'plaket' else LAND))
     out = f'{W_}/album/{i:02d}-{sc["ad"]}.mp4'
     pr = subprocess.Popen([FFMPEG, '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
                            '-c:v', 'libx264', '-crf', '14', '-preset', 'fast', '-pix_fmt', 'yuv420p', out], stdin=subprocess.PIPE)
