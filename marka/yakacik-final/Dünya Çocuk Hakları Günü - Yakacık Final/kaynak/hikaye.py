@@ -212,7 +212,6 @@ def hazirla():
         pts.append((min(x, W), rng.randint(0, 22)))
     pts += [(W, bant.height), (0, bant.height)]
     bd.polygon(pts, fill=LACIVERT + (255,))
-    bd.line([(0, 30), (W, 30)], fill=KIRMIZI + (255,), width=5)      # ince kırmızı çizgi (logo kırmızısı)
     VAR['bant'] = bant
     # üst etiket (kâğıt şerit)
     VAR['ust'] = etiket(trupper('20 Kasım · Dünya Çocuk Hakları Günü'), 33, LACIVERT, 8)
@@ -349,7 +348,7 @@ def ağaç_hazirla():
 # ---------------- ortak çizimler ----------------
 def alt_bant(im):
     im.paste(VAR['bant'], (0, BANT_Y), VAR['bant'])
-    cy = 1622
+    cy = 1652
     toplam = 150 + 34 + VAR['yazi'].width
     x0 = (W - toplam) // 2
     im.paste(VAR['isaret'], (x0, cy - 75), VAR['isaret'])
