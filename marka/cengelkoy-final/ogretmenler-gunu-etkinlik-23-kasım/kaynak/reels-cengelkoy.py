@@ -28,15 +28,14 @@ pl = lambda n: EV + 'plaket/DSC0' + str(n) + '.JPG'
 # ---- plan (vuruş cinsinden) ----
 bul = lambda kl, n: EV + kl + '/DSC0' + str(n) + '.JPG'
 PLAN = [('tek', [bul('konusma', 4792)], 8, True),                                   # açılış
-        ('cift', [bul('masada fotoğraflar', 4722), bul('masada fotoğraflar', 4724)], 7, False),
-        ('cift', [bul('masada fotoğraflar', 4728), bul('masada fotoğraflar', 4737)], 7, False),
-        ('cift', [bul('masada fotoğraflar', 4742), bul('masada fotoğraflar', 4759)], 7, False),
-        ('cift', [bul('masada fotoğraflar', 4772), bul('masada fotoğraflar', 4774)], 7, False),
+        ('cift', [bul('masada fotoğraflar', 4722), bul('masada fotoğraflar', 4724)], 8, False),
+        ('cift', [bul('masada fotoğraflar', 4728), bul('masada fotoğraflar', 4737)], 8, False),
+        ('cift', [bul('masada fotoğraflar', 4742), bul('masada fotoğraflar', 4759)], 8, False),
+        ('cift', [bul('masada fotoğraflar', 4772), bul('masada fotoğraflar', 4774)], 8, False),
         ('tek', [bul('karsilama', 4690)], 5, False)] + \
        [('tek', [bul('plaket', n)], 5, False) for n in (4936, 4959, 4962, 4965, 4966, 4970)] + \
        [('tek', [EV + 'plaket/zeynep-veysel hoca.jpg'], 5, False),
-        ('cift', [bul('eglence', 4802), bul('eglence', 4883)], 7, False),
-        ('cift', [bul('eglence', 4912)], 7, False)]                                  # tek yatay baskı
+        ('cift', [bul('eglence', 4802), bul('eglence', 4883)], 10, False)]          # v2: sondaki tek baskı (04912) çıktı
 CEKIM = []
 b = 0
 for tip, fl, u, bas in PLAN:

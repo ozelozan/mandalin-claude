@@ -75,3 +75,4 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - Yakacık Reels v3'ün uyarlaması (aynı müzik, aynı geçişler, çerçeveli baskılar, hareketli 3B rozet). Rozet "10. YILIMIZ": `sticker/rozet-10.png` (GPT 2.6, Yakacık rozeti referans; 10b alternatif).
 - Sıra Ozan'ın: 04792 açılış (tam ekran, başlık "Öğretmenler Günü Gecesi", tarih yok) → masalar 04722+04724, 04728+04737, 04742+04759, 04772+04774 → 04690 → plaketler 04936, 04959, 04962, 04965, 04966, 04970, Zeynep-Veysel Hoca → eğlence 04802+04883, 04912 (tek baskı) → 45. sn'de beyaz zeminde yalnızca Çengelköy Final logosu.
 - Her sahnede alt ortada Çengelköy Final logosu (logo-beyaz-yazi.png 557. satırdan bölünüp amblem + beyaz yazı yan yana, plakasız). Açıklama `instagram-aciklama-reels-10-yil.txt`.
+- v2 (26 Kasım): Ozan'ın isteğiyle sondaki tek baskı (04912) çıktı; süresi masa çiftlerine (8'er vuruş) ve eğlence çiftine (10 vuruş) dağıtıldı, süre yine 48 sn. `cikti/...-Reels-v2.mp4`.
