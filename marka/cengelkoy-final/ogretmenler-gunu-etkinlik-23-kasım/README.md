@@ -69,3 +69,9 @@ Plan değişince yalnızca değişen segmentler yeniden işlenir (segment adı i
 - v4 (25 Kasım): kısa sürüm 1:11. Plaket bölümü aynı, diğer sahnelerde baskılar 1-2 vuruşta bir; müzik 56 vuruş ileriden kesintisiz başlar (1,5 sn ses girişi), logo kartı parçanın düşüşüne oturur. `cikti/...-Fotograf-Albumu-v4.mp4`.
 - v5 (25 Kasım): plaketler plaket verene göre sıralı (1. kurucu 04931-36, 2. kurucu 04940-48, 3: 04959/62, 4: 04965/66, 5: 04955/58, 6: 04950/52), sonra 04970 + Zeynep-Veysel Hoca ortada yan yana, en son toplu; konuşmacılar soldan: kurucu, mavi gömlekli, sunucu, solist. `cikti/...-Fotograf-Albumu-v5.mp4` (1:11).
 - Kopya sürüm (25 Kasım): v5 + 6 masa fotoğrafı (04737, 04752, 04751, 04738, 04749, 04731) masalardan sonra 3+3 dizilimde. `python3 kaynak/album-ek.py` + `plan-album-ek.js` → `cikti/...-Fotograf-Albumu-v5-ek-masalar.mp4` (1:18). v5 değişmedi. Not: 04752/04751/04749 arka planında içki rafı görünüyor (Ozan istedi).
+
+## Çengelköy Final Reels (10. yıl, 26 Kasım 2026)
+`python3 kaynak/reels-cengelkoy.py <çalışma> <çıktı>` → `cikti/Cengelkoy-Final-Ogretmenler-Gunu-Gecesi-2026-Reels-v1.mp4` (dikey, 48 sn).
+- Yakacık Reels v3'ün uyarlaması (aynı müzik, aynı geçişler, çerçeveli baskılar, hareketli 3B rozet). Rozet "10. YILIMIZ": `sticker/rozet-10.png` (GPT 2.6, Yakacık rozeti referans; 10b alternatif).
+- Sıra Ozan'ın: 04792 açılış (tam ekran, başlık "Öğretmenler Günü Gecesi", tarih yok) → masalar 04722+04724, 04728+04737, 04742+04759, 04772+04774 → 04690 → plaketler 04936, 04959, 04962, 04965, 04966, 04970, Zeynep-Veysel Hoca → eğlence 04802+04883, 04912 (tek baskı) → 45. sn'de beyaz zeminde yalnızca Çengelköy Final logosu.
+- Her sahnede alt ortada Çengelköy Final logosu (logo-beyaz-yazi.png 557. satırdan bölünüp amblem + beyaz yazı yan yana, plakasız). Açıklama `instagram-aciklama-reels-10-yil.txt`.
