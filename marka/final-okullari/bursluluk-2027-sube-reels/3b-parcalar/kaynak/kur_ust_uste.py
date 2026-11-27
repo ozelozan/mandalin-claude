@@ -1,6 +1,7 @@
 # ChatGPT parcalarini kirpip parcalar/ altina koyar, afis duzeninde ust uste dizer (kontrol montaji).
 import os
 from PIL import Image
+Image.MAX_IMAGE_PIXELS=None
 K=os.path.dirname(os.path.abspath(__file__)); D=os.path.dirname(K)
 ad={'finalin':'yazi-finalin','bursluluk':'yazi-bursluluk','sinavi':'yazi-sinavi',
     'cengelkoy':'sube-cengelkoy','beykoz':'sube-beykoz','ogrenci':'ogrenci'}
@@ -15,7 +16,8 @@ yer={'tarih':(455,268,985),'sube':(330,478,870),'finalin':(280,605,1000),'burslu
 def koy(c,im,x0,y0,x1):
     w=x1-x0; h=round(im.height*w/im.width); c.alpha_composite(im.resize((w,h),Image.LANCZOS),(x0,y0))
 for sube in ['cengelkoy','beykoz']:
-    c=Image.new('RGBA',(1440,1999),(39,52,127,255))
+    c=Image.open(f'{D}/parcalar/zemin.png').convert('RGBA').resize((1440,1999),Image.LANCZOS)
+    c.alpha_composite(Image.open(f'{D}/parcalar/cizgiler-{sube}.png').resize((1440,1999),Image.LANCZOS))
     for k in ['tarih','sube','finalin','bursluluk','sinavi','bant']:
         koy(c,P[sube] if k=='sube' else P[k],*yer[k])
     o=P['ogrenci']; x0,_,x1=yer['ogrenci']; h=round(o.height*(x1-x0)/o.width)
