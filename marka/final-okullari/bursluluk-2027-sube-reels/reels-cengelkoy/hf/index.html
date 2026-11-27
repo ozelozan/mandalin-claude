@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#27347F}
+:root{--lac:#27347F;--sar:#FFD200;--kir:#E3262A;--bey:#FFFFFF}
+#root{position:absolute;inset:0;overflow:hidden;background:var(--lac)}
+#sahne{position:absolute;inset:0}
+.abs{position:absolute;display:block}
+#zemin{left:0;top:0;width:1080px;height:1920px}
+#cizgi-kap{left:-65px;top:-41px;width:1202px;height:1669px}
+#cizgi-kap img{width:100%;height:100%}
+#tarih{left:262px;top:183px;width:443px}
+#sube{left:210px;top:358px;width:451px}
+#finalin{left:168px;top:464px;width:601px}
+#bursluluk{left:153px;top:642px;width:762px}
+#sinavi{left:143px;top:819px;width:789px}
+#ogrenci{left:750px;top:230px;width:234px}
+#parilti{left:120px;top:630px;width:840px;height:500px;overflow:hidden;pointer-events:none}
+#parilti i{position:absolute;top:-100px;left:-300px;width:160px;height:700px;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));
+  transform:rotate(18deg);mix-blend-mode:screen}
+#siniflar{left:0;top:1128px;width:1080px;text-align:center;white-space:nowrap;
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:58px;color:var(--bey);letter-spacing:.01em}
+#siniflar span{display:inline-block}
+#siniflar .vurgu{color:var(--sar)}
+#siniflar-cizgi{left:140px;top:1212px;width:800px;height:9px;border-radius:5px;background:var(--sar);transform-origin:0 50%}
+#bant{left:280px;top:1232px;width:520px}
+#tel{left:230px;top:1392px;width:620px;height:86px;border-radius:43px;background:var(--bey);
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  font-family:'Montserrat',sans-serif;font-weight:800;color:var(--lac);font-size:54px;white-space:nowrap}
+#tel span{display:inline-block}
+#tel .alan{font-size:38px;font-weight:700;margin-right:4px}
+#logo-satir{left:0;top:1505px;width:1080px;height:150px}
+#logo{left:250px;top:0;height:150px}
+#slogan{left:440px;top:12px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:54px;line-height:1.05;color:var(--bey)}
+#slogan span{display:block}
+#slogan .s2{color:var(--sar)}
+#ai-not{left:0;top:1676px;width:1080px;text-align:center;font-family:'Open Sans',sans-serif;font-size:20px;color:rgba(255,255,255,.75)}
+#kanca{left:0;top:760px;width:1080px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:900;line-height:1.02}
+#kanca .sat{display:block;white-space:nowrap}
+#kanca .k{display:inline-block;font-size:100px;color:var(--bey);margin:0 .12em}
+#kanca .k.y{color:var(--sar)}
+#flas{left:0;top:0;width:1080px;height:1920px;background:#fff;opacity:0}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="25.8" data-width="1080" data-height="1920" data-layout-allow-overlap>
+  <div id="sahne" class="abs">
+    <img id="zemin" class="abs" src="assets/zemin.jpg" alt="">
+    <div id="cizgi-kap" class="abs"><img id="cizgiler" src="assets/cizgiler.png" alt=""></div>
+    <img id="tarih" class="abs" src="assets/tarih-9-10-ocak.png" alt="9-10 Ocak">
+    <img id="ogrenci" class="abs" src="assets/ogrenci.png" alt="">
+    <img id="sube" class="abs" src="assets/sube-cengelkoy.png" alt="çengelköy">
+    <img id="finalin" class="abs" src="assets/yazi-finalin.png" alt="final'in">
+    <img id="bursluluk" class="abs" src="assets/yazi-bursluluk.png" alt="BURSLULUK">
+    <img id="sinavi" class="abs" src="assets/yazi-sinavi.png" alt="SINAVI">
+    <div id="siniflar" class="abs"><span id="n4" class="vurgu">4,</span> <span id="n5">5,</span> <span id="n6">6,</span> <span id="n7">7,</span> <span id="n8">8,</span> <span id="n9">9,</span> <span id="n10">10</span> <span id="nve">ve</span> <span id="n11" class="vurgu">11.</span> <span id="nsin">SINIFLAR</span></div>
+    <div id="siniflar-cizgi" class="abs"></div>
+    <img id="bant" class="abs" src="assets/online-kayit-bandi.png" alt="Online Kayıt www.finalegitim.com.tr">
+    <div id="tel" class="abs"><span id="t1" class="alan">0216</span><span id="t2">557</span><span id="t3">07</span><span id="t4">81</span></div>
+    <div id="logo-satir" class="abs">
+      <img id="logo" class="abs" src="assets/logo.png" alt="Çengelköy Final Okulları">
+      <div id="slogan" class="abs"><span id="s1">Geleceğin</span><span id="s2" class="s2">Final'de!</span></div>
+    </div>
+    <div id="ai-not" class="abs">Bu içerik, yapay zekâ tarafından oluşturulmuş model ve öğeler barındırmaktadır.</div>
+  </div>
+  <div id="kanca" class="abs">
+    <span class="sat"><span class="k" id="k1">GELECEĞİN</span><span class="k" id="k2">İÇİN</span></span>
+    <span class="sat"><span class="k y" id="k3">İLK</span><span class="k y" id="k4">ADIMI</span><span class="k y" id="k5">AT!</span></span>
+  </div>
+  <div id="flas" class="abs"></div>
+</div>
+<script>
+(function(){
+  const tl = gsap.timeline({paused:true});
+  const set=(s,v)=>tl.set(s,v,0);
+  // başlangıç durumları
+  set('#cizgi-kap',{clipPath:'inset(0% 100% 0% 0%)'});
+  set(['#tarih','#sube','#finalin','#bursluluk','#sinavi','#ogrenci','#bant','#tel','#logo','#siniflar-cizgi'],{autoAlpha:0});
+  set('#siniflar span',{autoAlpha:0,y:30});
+  set('#tel span',{autoAlpha:0,y:24});
+  set('#slogan span',{autoAlpha:0,x:-40});
+  set('#ai-not',{autoAlpha:0});
+  set('#zemin',{scale:1.08});
+  // 0.0 kanca: kelimeler ekrana çakılır (ilk kare dolu: ilk kelime 0'da görünür)
+  const kw=[['#k1',0.0],['#k2',0.56],['#k3',0.78],['#k4',1.1],['#k5',1.54]];
+  kw.forEach(([s,t],i)=>{ if(i===0){ tl.fromTo(s,{scale:1.12},{scale:1,duration:.25,ease:'power3.out'},0); }
+    else { tl.fromTo(s,{autoAlpha:0,scale:2.2,y:-30},{autoAlpha:1,scale:1,y:0,duration:.22,ease:'power4.out'},t); } });
+  tl.to('#zemin',{scale:1,duration:2.2,ease:'power2.out'},0);
+  tl.to('#kanca',{scale:1.6,autoAlpha:0,duration:.3,ease:'power2.in'},1.86);
+  // çizgiler soldan sağa çizilir
+  tl.to('#cizgi-kap',{clipPath:'inset(0% 0% 0% 0%)',duration:1.4,ease:'power2.inOut'},1.95);
+  // başlık yığını: kelime kelime düşer (gravity drop)
+  const drop=(s,t)=>tl.fromTo(s,{autoAlpha:0,y:-420,scale:1.15},{autoAlpha:1,y:0,scale:1,duration:.55,ease:'back.out(1.6)'},t);
+  drop('#sube',2.02); drop('#finalin',2.6); drop('#bursluluk',3.3);
+  tl.fromTo('#sinavi',{autoAlpha:0,scale:2.6},{autoAlpha:1,scale:1,duration:.38,ease:'power4.in'},3.62);
+  tl.fromTo('#sahne',{y:0},{keyframes:{y:[14,-10,6,-3,0]},duration:.32,ease:'none'},4.0);
+  tl.fromTo('#flas',{opacity:.35},{opacity:0,duration:.25,immediateRender:false},4.0);
+  // 9-10 OCAK rozeti
+  tl.fromTo('#tarih',{autoAlpha:0,scale:0,rotation:-8},{autoAlpha:1,scale:1,rotation:0,duration:.5,ease:'back.out(2.2)'},4.36);
+  tl.to('#tarih',{scale:1.14,duration:.16,yoyo:true,repeat:1,ease:'power2.out'},5.12);
+  // sınıflar: 4 ve 11 vurgulu
+  const pop=(s,t,big)=>tl.fromTo(s,{autoAlpha:0,y:30,scale:big?2:1},{autoAlpha:1,y:0,scale:1,duration:big?.42:.22,ease:big?'back.out(2.5)':'power3.out'},t);
+  pop('#n4',5.94,true);
+  [['#n5',6.2],['#n6',6.32],['#n7',6.44],['#n8',6.56],['#n9',6.68],['#n10',6.8],['#nve',6.9]].forEach(([s,t])=>pop(s,t,false));
+  pop('#n11',6.96,true); pop('#nsin',7.5,false);
+  tl.fromTo('#siniflar-cizgi',{autoAlpha:1,scaleX:0},{scaleX:1,duration:.4,ease:'power3.out'},7.55);
+  tl.to(['#n4','#n11'],{scale:1.3,duration:.18,yoyo:true,repeat:1,ease:'power2.out'},8.0);
+  // öğrenci: "tüm öğrencilerimizi"
+  tl.fromTo('#ogrenci',{autoAlpha:0,y:-260},{autoAlpha:1,y:0,duration:.6,ease:'back.out(1.4)'},8.15);
+  // ikinci vurgu: "başarını fırsata dönüştürmek" — başlıkta parıltı + nabız
+  tl.fromTo('#bursluluk',{filter:'brightness(1)'},{filter:'brightness(1.45)',duration:.18,yoyo:true,repeat:1,ease:'power2.out',immediateRender:false},10.6);
+  tl.fromTo('#sinavi',{filter:'brightness(1)'},{filter:'brightness(1.35)',duration:.18,yoyo:true,repeat:1,ease:'power2.out',immediateRender:false},10.85);
+  tl.to(['#bursluluk','#sinavi'],{scale:1.06,duration:.22,yoyo:true,repeat:1,ease:'power2.out'},11.1);
+  // "hemen başvurunu yap" → online kayıt bandı
+  tl.fromTo('#bant',{autoAlpha:0,scale:.2,rotation:-14},{autoAlpha:1,scale:1,rotation:0,duration:.55,ease:'back.out(1.8)'},12.55);
+  tl.to('#bant',{scale:1.12,duration:.2,yoyo:true,repeat:1,ease:'power2.out'},14.56);
+  // telefon
+  tl.fromTo('#tel',{autoAlpha:0,scaleX:.1},{autoAlpha:1,scaleX:1,duration:.4,ease:'power3.out'},16.9);
+  [['#t1',17.66],['#t2',19.02],['#t3',20.14],['#t4',20.96]].forEach(([s,t])=>tl.fromTo(s,{autoAlpha:0,y:24,scale:1.6},{autoAlpha:1,y:0,scale:1,duration:.3,ease:'back.out(2)'},t));
+  // logo + slogan
+  tl.fromTo('#logo',{autoAlpha:0,scale:.3,rotation:-30},{autoAlpha:1,scale:1,rotation:0,duration:.55,ease:'back.out(1.8)'},21.6);
+  tl.to('#ai-not',{autoAlpha:1,duration:.4},21.8);
+  tl.to('#s1',{autoAlpha:1,x:0,duration:.35,ease:'power3.out'},23.5);
+  tl.fromTo('#s2',{autoAlpha:0,x:0,scale:2},{autoAlpha:1,scale:1,duration:.4,ease:'back.out(2.4)'},24.25);
+  // final vurgusu: her şey birlikte nabız atar
+  tl.to(['#tarih','#sube','#finalin','#bursluluk','#sinavi','#bant','#tel'],{scale:1.05,duration:.2,yoyo:true,repeat:1,ease:'power2.out'},24.3);
+  tl.fromTo('#flas',{opacity:.25},{opacity:0,duration:.3,immediateRender:false},24.3);
+  tl.set({},{},25.8);
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>
