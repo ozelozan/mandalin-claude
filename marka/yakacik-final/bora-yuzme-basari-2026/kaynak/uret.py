@@ -156,7 +156,7 @@ body{{background:radial-gradient(ellipse 820px 700px at 50% 40%,#22398F 0%,#1623
 <div class="abs isin"></div>
 <div class="abs ust"><div class="k">YAKACIK FİNAL OKULLARI'NDAN</div>
 <div class="d b">TEBRİKLER BORA!</div>
-<div class="s">Yüzmede İstanbul'da Çifte İkincilik</div></div>
+<div class="s">Yüzmede İstanbul'da BÜYÜK BAŞARI</div></div>
 <div class="abs cerceve"><img src="bora-kirp.jpg"></div>
 <div class="abs plaka"><div class="d ad">BORA MEHMET ÇELİKDEMİR</div>
 <div class="alt">Özel Yakacık Final Anadolu Lisesi Öğrencimiz</div></div>
