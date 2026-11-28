@@ -43,11 +43,23 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#27347F}
 #kanca .sat{display:block;white-space:nowrap}
 #kanca .k{display:inline-block;font-size:100px;color:var(--bey);margin:0 .12em}
 #kanca .k.y{color:var(--sar)}
+#ara{left:0;top:1250px;width:1080px;text-align:center;font-family:'MontserratTR',sans-serif;font-weight:900;line-height:1.08}
+#ara .sat{display:block;white-space:nowrap}
+#ara .a{display:inline-block;font-size:76px;color:var(--bey);margin:0 .1em}
+#ara .a.y{color:var(--sar)}
+#ara .hap{background:var(--sar);color:var(--lac);border-radius:18px;padding:4px 26px 2px;margin-left:.15em}
+#bant-isik{left:280px;top:1232px;width:520px;height:145px;overflow:hidden;
+  -webkit-mask-image:url('assets/online-kayit-bandi.png');mask-image:url('assets/online-kayit-bandi.png');
+  -webkit-mask-size:100% 100%;mask-size:100% 100%}
+#bant-isik i{position:absolute;top:-40px;left:-200px;width:120px;height:240px;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.75),rgba(255,255,255,0))}
+#logo-isik{left:390px;top:1350px;width:300px;height:260px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,225,80,.55),rgba(255,225,80,0));opacity:0}
 #flas{left:0;top:0;width:1080px;height:1920px;background:#fff;opacity:0}
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="main" data-start="0" data-duration="25.8" data-width="1080" data-height="1920" data-layout-allow-overlap>
+<div id="root" data-composition-id="main" data-start="0" data-duration="26" data-width="1080" data-height="1920" data-layout-allow-overlap>
   <div id="sahne" class="abs">
     <img id="zemin" class="abs" src="assets/zemin.jpg" alt="">
     <!-- sarı çizgiler ve oklar (vektör) -->
@@ -76,7 +88,9 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#27347F}
     <div id="siniflar" class="abs"><span id="n4" class="vurgu">4,</span> <span id="n5">5,</span> <span id="n6">6,</span> <span id="n7">7,</span> <span id="n8">8,</span> <span id="n9">9,</span> <span id="n10">10</span> <span id="nve">ve</span> <span id="n11" class="vurgu">11.</span> <span id="nsin">SINIFLAR</span></div>
     <div id="siniflar-cizgi" class="abs"></div>
     <img id="bant" class="abs" src="assets/online-kayit-bandi.png" alt="Online Kayıt www.finalegitim.com.tr">
+    <div id="logo-isik" class="abs"></div>
     <img id="logo" class="abs" src="assets/logo.png" alt="Çengelköy Final Okulları">
+    <div id="bant-isik" class="abs"><i id="bant-isik-i"></i></div>
     <div id="tel" class="abs"><span id="t1" class="alan">0216</span><span id="t2">557</span><span id="t3">07</span><span id="t4">81</span></div>
     <div id="slogan" class="abs"><span id="s1">Geleceğin</span> <span id="s2" class="s2">Final'de!</span></div>
   </div>
@@ -84,10 +98,16 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#27347F}
     <span class="sat"><span class="k" id="k1">GELECEĞİN</span><span class="k" id="k2">İÇİN</span></span>
     <span class="sat"><span class="k y" id="k3">İLK</span><span class="k y" id="k4">ADIMI</span><span class="k y" id="k5">AT!</span></span>
   </div>
+  <div id="ara" class="abs">
+    <span class="sat"><span class="a" id="a1">BAŞARINI</span><span class="a y" id="a2">FIRSATA</span></span>
+    <span class="sat"><span class="a" id="a3">DÖNÜŞTÜR!</span></span>
+    <span class="sat"><span class="a" id="a4">HEMEN</span><span class="a hap" id="a5">BAŞVUR</span></span>
+  </div>
   <div id="flas" class="abs"></div>
 </div>
 <script>
 (function(){
+  // Zamanlar Deniz Altaş seslendirmesinin düzenlenmiş halinden (ses/vo-deniz.wav, kelime zamanları vo-deniz-kelime.json)
   const tl = gsap.timeline({paused:true});
   const set=(s,v)=>tl.set(s,v,0);
   set('#cizgiler path.c',{strokeDasharray:1,strokeDashoffset:1});
@@ -96,56 +116,74 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#27347F}
   set('#siniflar span',{autoAlpha:0,y:30});
   set('#tel span',{autoAlpha:0,y:24});
   set('#slogan span',{autoAlpha:0,y:20});
+  set('#ara .a',{autoAlpha:0});
   set('#zemin',{scale:1.08});
-  // 0.0 kanca: kelimeler ekrana çakılır
-  const kw=[['#k1',0.0],['#k2',0.56],['#k3',0.78],['#k4',1.1],['#k5',1.54]];
+  const nabiz=(s,t,k)=>tl.to(s,{scale:k||1.1,duration:.14,yoyo:true,repeat:1,ease:'power2.out'},t);
+
+  // 0.00 "Geleceğin için ilk adımı at" — kelime kelime çakılır
+  const kw=[['#k1',0.0],['#k2',0.62],['#k3',0.82],['#k4',1.18],['#k5',1.56]];
   kw.forEach(([s,t],i)=>{ if(i===0){ tl.fromTo(s,{scale:1.12},{scale:1,duration:.25,ease:'power3.out'},0); }
-    else { tl.fromTo(s,{autoAlpha:0,scale:2.2,y:-30},{autoAlpha:1,scale:1,y:0,duration:.22,ease:'power4.out'},t); } });
+    else { tl.fromTo(s,{autoAlpha:0,scale:2.2,y:-30},{autoAlpha:1,scale:1,y:0,duration:.2,ease:'power4.out'},t); } });
   tl.to('#zemin',{scale:1,duration:2.2,ease:'power2.out'},0);
-  tl.to('#kanca',{scale:1.6,autoAlpha:0,duration:.3,ease:'power2.in'},1.86);
-  // çizgiler çizilir, ok uçları sonunda belirir
+  tl.to('#kanca',{scale:1.6,autoAlpha:0,duration:.25,ease:'power2.in'},1.82);
+
   const ciz=(s,t,d)=>tl.to(s,{strokeDashoffset:0,duration:d,ease:'power2.inOut'},t);
-  // sıra: dalga çengelköy ile · sol ok BURSLULUK ile · sağ ok SINAVI ile · üst yay rozetle · rozetten çıkan yay öğrenciyle
-  ciz('#c1a',1.98,.25); ciz('#c1b',2.2,.4);
-  ciz('#c4',3.22,.3); ciz('#c5',3.95,.3);
-  ciz('#c2',4.05,.35); ciz('#c3',7.7,.5);
-  const uc=(s,t)=>tl.to(s,{autoAlpha:1,scale:1,duration:.25,ease:'back.out(3)'},t);
-  uc('#u1',2.55); uc('#u4',3.48); uc('#u5',4.2);
-  // başlık yığını: kelime kelime düşer
-  const drop=(s,t)=>tl.fromTo(s,{autoAlpha:0,y:-420,scale:1.15},{autoAlpha:1,y:0,scale:1,duration:.55,ease:'back.out(1.6)'},t);
-  drop('#sube',2.02); drop('#finalin',2.6); drop('#bursluluk',3.3);
-  tl.fromTo('#sinavi',{autoAlpha:0,scale:2.6},{autoAlpha:1,scale:1,duration:.38,ease:'power4.in'},3.62);
-  tl.fromTo('#sahne',{y:0},{keyframes:{y:[14,-10,6,-3,0]},duration:.32,ease:'none'},4.0);
-  tl.fromTo('#flas',{opacity:.35},{opacity:0,duration:.25,immediateRender:false},4.0);
-  // 9-10 OCAK rozeti
-  tl.fromTo('#tarih',{autoAlpha:0,scale:0,rotation:-8},{autoAlpha:1,scale:1,rotation:0,duration:.5,ease:'back.out(2.2)'},4.36);
-  tl.to('#tarih',{scale:1.14,duration:.16,yoyo:true,repeat:1,ease:'power2.out'},5.12);
-  // sınıflar: 4 ve 11 vurgulu
-  const pop=(s,t,big)=>tl.fromTo(s,{autoAlpha:0,y:30,scale:big?2:1},{autoAlpha:1,y:0,scale:1,duration:big?.42:.22,ease:big?'back.out(2.5)':'power3.out'},t);
-  pop('#n4',5.94,true);
-  [['#n5',6.2],['#n6',6.32],['#n7',6.44],['#n8',6.56],['#n9',6.68],['#n10',6.8],['#nve',6.9]].forEach(([s,t])=>pop(s,t,false));
-  pop('#n11',6.96,true); pop('#nsin',7.5,false);
-  tl.fromTo('#siniflar-cizgi',{autoAlpha:1,scaleX:0},{scaleX:1,duration:.4,ease:'power3.out'},7.55);
-  tl.to(['#n4','#n11'],{scale:1.3,duration:.18,yoyo:true,repeat:1,ease:'power2.out'},8.0);
-  // öğrenci yukarıdan iner, U ve K'nin üstüne oturur
-  tl.fromTo('#ogrenci',{autoAlpha:0,y:-260},{autoAlpha:1,y:0,duration:.6,ease:'back.out(1.2)'},8.15);
-  // ikinci vurgu: başlık parlar
-  tl.fromTo('#bursluluk',{filter:'brightness(1)'},{filter:'brightness(1.45)',duration:.18,yoyo:true,repeat:1,ease:'power2.out',immediateRender:false},10.6);
-  tl.fromTo('#sinavi',{filter:'brightness(1)'},{filter:'brightness(1.35)',duration:.18,yoyo:true,repeat:1,ease:'power2.out',immediateRender:false},10.85);
-  tl.to(['#bursluluk','#sinavi'],{scale:1.06,duration:.22,yoyo:true,repeat:1,ease:'power2.out'},11.1);
-  // "hemen başvurunu yap": bant ve altında logo gelir, sonra sabit kalır
-  tl.fromTo('#bant',{autoAlpha:0,scale:.2,rotation:-14},{autoAlpha:1,scale:1,rotation:0,duration:.55,ease:'back.out(1.8)'},12.55);
-  tl.fromTo('#logo',{autoAlpha:0,scale:.3},{autoAlpha:1,scale:1,duration:.5,ease:'back.out(1.8)'},12.85);
-  // telefon (logonun altında)
-  tl.fromTo('#tel',{autoAlpha:0,scaleX:.1},{autoAlpha:1,scaleX:1,duration:.4,ease:'power3.out'},16.9);
-  [['#t1',17.66],['#t2',19.02],['#t3',20.14],['#t4',20.96]].forEach(([s,t])=>tl.fromTo(s,{autoAlpha:0,y:24,scale:1.6},{autoAlpha:1,y:0,scale:1,duration:.3,ease:'back.out(2)'},t));
-  // slogan tek satır
-  tl.to('#s1',{autoAlpha:1,y:0,duration:.35,ease:'power3.out'},23.5);
-  tl.fromTo('#s2',{autoAlpha:0,y:0,scale:2},{autoAlpha:1,scale:1,duration:.4,ease:'back.out(2.4)'},24.25);
-  // final vurgusu (bant ve logo sabit)
-  tl.to(['#tarih','#sube','#finalin','#bursluluk','#sinavi','#tel'],{scale:1.05,duration:.2,yoyo:true,repeat:1,ease:'power2.out'},24.3);
-  tl.fromTo('#flas',{opacity:.25},{opacity:0,duration:.3,immediateRender:false},24.3);
-  tl.set({},{},25.8);
+  const uc=(s,t)=>tl.to(s,{autoAlpha:1,scale:1,duration:.22,ease:'back.out(3)'},t);
+  const drop=(s,t)=>tl.fromTo(s,{autoAlpha:0,y:-420,scale:1.15},{autoAlpha:1,y:0,scale:1,duration:.45,ease:'back.out(1.6)'},t-.3);
+
+  // 2.06 "Çengelköy" · 2.68 "Final" · 2.88 "Okulları"
+  ciz('#c1a',1.9,.2); ciz('#c1b',2.08,.32); uc('#u1',2.38);
+  drop('#sube',2.06);
+  tl.fromTo('#finalin',{autoAlpha:0,scale:1.9},{autoAlpha:1,scale:1,duration:.3,ease:'back.out(1.4)'},2.62);
+  nabiz(['#sube','#finalin'],2.95,1.06);
+  // 3.38 "Bursluluk" · 3.92 "Sınavı"
+  ciz('#c4',3.12,.26); uc('#u4',3.36); drop('#bursluluk',3.38);
+  ciz('#c5',3.66,.26); uc('#u5',3.9);
+  tl.fromTo('#sinavi',{autoAlpha:0,scale:2.6},{autoAlpha:1,scale:1,duration:.3,ease:'power4.in'},3.7);
+  tl.fromTo('#sahne',{y:0},{keyframes:{y:[14,-10,6,-3,0]},duration:.3,ease:'none'},4.0);
+  tl.fromTo('#flas',{opacity:.3},{opacity:0,duration:.22,immediateRender:false},4.0);
+  // 4.28 "9" · 4.62 "10" · 5.02 "Ocak"
+  ciz('#c2',4.0,.28);
+  tl.fromTo('#tarih',{autoAlpha:0,scale:0,rotation:-8},{autoAlpha:1,scale:1,rotation:0,duration:.4,ease:'back.out(2.2)'},4.2);
+  nabiz('#tarih',4.62,1.1); nabiz('#tarih',5.02,1.14);
+  // 5.78 "4." · 6.22 "sınıftan" · 6.68 "11." · 7.22 "sınıfa"
+  const pop=(s,t,big)=>tl.fromTo(s,{autoAlpha:0,y:30,scale:big?2.1:1},{autoAlpha:1,y:0,scale:1,duration:big?.38:.18,ease:big?'back.out(2.5)':'power3.out'},t);
+  pop('#n4',5.74,true);
+  [['#n5',6.2],['#n6',6.28],['#n7',6.36],['#n8',6.44],['#n9',6.52],['#n10',6.6]].forEach(([s,t])=>pop(s,t,false));
+  pop('#n11',6.66,true); pop('#nve',6.9,false); pop('#nsin',7.2,false);
+  tl.fromTo('#siniflar-cizgi',{autoAlpha:1,scaleX:0},{scaleX:1,duration:.35,ease:'power3.out'},7.25);
+  // 7.84 "tüm" — bütün sınıflar dalga gibi zıplar · 8.14 "öğrencilerimizi" — öğrenci oturur
+  ['#n4','#n5','#n6','#n7','#n8','#n9','#n10','#nve','#n11','#nsin'].forEach((s,i)=>tl.to(s,{y:-18,duration:.1,yoyo:true,repeat:1,ease:'power2.out'},7.84+i*.035));
+  ciz('#c3',7.75,.4);
+  tl.fromTo('#ogrenci',{autoAlpha:0,y:-260},{autoAlpha:1,y:0,duration:.5,ease:'back.out(1.2)'},8.1);
+  // 8.86 "bekliyoruz" — 4 ve 11 göz kırpar
+  nabiz(['#n4','#n11'],8.9,1.3);
+  // 9.72-13.0 "Başarını fırsata dönüştürmek için hemen başvurunu yap" — ara yazı
+  const ara=(s,t)=>tl.fromTo(s,{autoAlpha:0,scale:2,y:-20},{autoAlpha:1,scale:1,y:0,duration:.2,ease:'power4.out'},t);
+  ara('#a1',9.72); ara('#a2',10.24); ara('#a3',10.72); ara('#a4',11.6); ara('#a5',12.08);
+  tl.fromTo('#bursluluk',{filter:'brightness(1)'},{filter:'brightness(1.45)',duration:.16,yoyo:true,repeat:1,ease:'power2.out',immediateRender:false},10.24);
+  tl.fromTo('#sinavi',{filter:'brightness(1)'},{filter:'brightness(1.35)',duration:.16,yoyo:true,repeat:1,ease:'power2.out',immediateRender:false},10.4);
+  nabiz('#a5',12.76,1.15);
+  tl.to('#ara',{autoAlpha:0,scale:.6,duration:.2,ease:'power2.in'},13.08);
+  // 13.32 "Online kayıt" — bant ve logo gelir, sonra yerinde sabit
+  tl.fromTo('#bant',{autoAlpha:0,scale:.2,rotation:-14},{autoAlpha:1,scale:1,rotation:0,duration:.4,ease:'back.out(1.8)'},13.2);
+  tl.fromTo('#logo',{autoAlpha:0,scale:.3},{autoAlpha:1,scale:1,duration:.4,ease:'back.out(1.8)'},13.45);
+  // 14.14 "finalegitim.com.tr" — bandın üstünden ışık geçer (bant kıpırdamaz)
+  tl.fromTo('#bant-isik-i',{x:0},{x:820,duration:.9,ease:'power1.inOut'},14.14);
+  tl.fromTo('#bant-isik-i',{x:0},{x:820,duration:.6,ease:'power1.inOut',immediateRender:false},15.5);
+  // 16.6 "Bilgi için" — telefon · 17.52 "0216" · 18.86 "557" · 20.0 "07" · 20.68 "81"
+  tl.fromTo('#tel',{autoAlpha:0,scaleX:.1},{autoAlpha:1,scaleX:1,duration:.35,ease:'power3.out'},16.55);
+  [['#t1',17.5],['#t2',18.84],['#t3',19.98],['#t4',20.66]].forEach(([s,t])=>tl.fromTo(s,{autoAlpha:0,y:24,scale:1.6},{autoAlpha:1,y:0,scale:1,duration:.26,ease:'back.out(2)'},t));
+  // 21.58 "Çengelköy" · 22.5 "Final" · 22.8 "Okulları" — isimler ve logo ışığı
+  nabiz('#sube',21.58,1.1); nabiz('#finalin',22.45,1.08);
+  tl.to('#logo-isik',{opacity:1,duration:.25,yoyo:true,repeat:1,ease:'power2.out'},21.62);
+  tl.to('#logo-isik',{opacity:1,duration:.2,yoyo:true,repeat:1,ease:'power2.out'},22.75);
+  // 23.31 "Geleceğin" · 24.0 "Final'de!"
+  tl.to('#s1',{autoAlpha:1,y:0,duration:.3,ease:'power3.out'},23.3);
+  tl.fromTo('#s2',{autoAlpha:0,y:0,scale:2},{autoAlpha:1,scale:1,duration:.35,ease:'back.out(2.4)'},24.0);
+  tl.to(['#tarih','#sube','#finalin','#bursluluk','#sinavi','#tel'],{scale:1.05,duration:.18,yoyo:true,repeat:1,ease:'power2.out'},24.05);
+  tl.fromTo('#flas',{opacity:.22},{opacity:0,duration:.3,immediateRender:false},24.05);
+  tl.set({},{},26);
   window.__timelines = window.__timelines || {};
   window.__timelines["main"] = tl;
 })();

@@ -19,3 +19,11 @@
 
 ## v3 (27 Kas 2026)
 `cikti/cengelkoy-final-bursluluk-reels-v3.mp4`: telefon hapında "0216" rakamlarla aynı taban çizgisine hizalandı (align-items: baseline).
+
+## v4 — Deniz Altaş gerçek seslendirme (28 Kas 2026)
+`cikti/cengelkoy-final-bursluluk-reels-v4-deniz.mp4` (26 sn, -14,2 LUFS, tepe -1,4 dB).
+- Ses: `deniz_altas seslendirme/Çengelköy Final Okulları_3.wav` (29,1 sn) → `kaynak/ses_duzenle.py` ile boşluklar 0,16 sn'ye kısaltıldı (12 ms geçiş), hafif EQ + kompresör, %3 hız → `ses/vo-deniz.wav` (24,9 sn). Kelime zamanları `ses/vo-deniz-kelime.json`.
+- Sözle senkron yapı: her öğe adı söylendiğinde gelir, tekrar anılınca tepki verir (çengelköy/final'in nabzı, "9-10 Ocak"ta rozet iki kez atar, "4." ve "11." büyük vurgulu, "tüm"de bütün sınıflar dalga gibi zıplar, "öğrencilerimizi"de öğrenci oturur, "bekliyoruz"da 4 ve 11 göz kırpar).
+- "Başarını fırsata dönüştürmek için hemen başvurunu yap" ekranda karşılığı olmadığı için alt boşlukta kelime kelime ara yazı (BAŞARINI FIRSATA DÖNÜŞTÜR! HEMEN [BAŞVUR]); "Online kayıt"ta yerini bant + logoya bırakır.
+- Bant ve logo sabit: adres okunurken bandın üstünden ışık geçer, "Çengelköy Final Okulları"nda logonun arkası parlar.
+- Beykoz için aynı hat: `deniz_altas seslendirme/Beykoz Final Okulları_3.wav`.
