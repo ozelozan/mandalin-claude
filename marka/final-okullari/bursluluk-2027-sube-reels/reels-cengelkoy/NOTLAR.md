@@ -27,3 +27,10 @@
 - "Başarını fırsata dönüştürmek için hemen başvurunu yap" ekranda karşılığı olmadığı için alt boşlukta kelime kelime ara yazı (BAŞARINI FIRSATA DÖNÜŞTÜR! HEMEN [BAŞVUR]); "Online kayıt"ta yerini bant + logoya bırakır.
 - Bant ve logo sabit: adres okunurken bandın üstünden ışık geçer, "Çengelköy Final Okulları"nda logonun arkası parlar.
 - Beykoz için aynı hat: `deniz_altas seslendirme/Beykoz Final Okulları_3.wav`.
+
+## v5 (28 Kas 2026): `cikti/cengelkoy-final-bursluluk-reels-v5-deniz.mp4`
+- Ses hızlandırılmadı (atempo yok); kelime sonlarına 0,12 sn pay bırakıldı, "Okulları" net duyuluyor.
+- Görüntü zamanları v4 sesine göre yazılı; `ses/zaman-esleme-v4-v5.json` (44 kelime eşlemesi) ile v5 sesine otomatik kaydırılıyor (index.html başındaki T() sarmalayıcısı ve ses_miks.py).
+- Sınıflar satırında pop dizisi kaldırıldı, satır tamamlanınca tek efekt.
+- 27,2 sn, -14,1 LUFS, tepe -1,4 dB.
+- Ders: ses_miks.py'de seslendirme ve müzik aynı süreye sabitlenmezse (apad+atrim) ffmpeg sidechain/amix grafiği kilitlenip sonsuza dek bekliyor; ffmpeg'e her zaman -nostdin ver, uzun işlere timeout koy.
