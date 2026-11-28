@@ -4,11 +4,11 @@
 
 | Dosya | Fotoğraf | Metin |
 |---|---|---|
-| hikaye-1 | f14 (tam ekran) | ORTAOKUL · Veli Toplantımız |
+| hikaye-1 | f17 (tam ekran) | ORTAOKUL · Veli Toplantımız |
 | hikaye-2 | f5 büyük + f12, f1 | BİREBİR GÖRÜŞME · Her öğrenci özel |
 | hikaye-3 | f3 büyük + f2, f4 | VELİ TOPLANTISI · Birlikte konuştuk |
 | hikaye-4 | f6, f7, f11, f13 | OKUL VE AİLE · El ele aynı hedefe |
-| hikaye-5 | f17, f18, f19, f20 (ikinci gönderim) | GELİŞİM TAKİBİ · Adım adım birlikte |
+| hikaye-5 | f14, f18, f19, f20 | GELİŞİM TAKİBİ · Adım adım birlikte |
 | hikaye-6 | f9, f15, f10, f16 | TEŞEKKÜRLER · Katılımınız için teşekkür ederiz |
 
 f8 (IMG_7061) kullanılmadı.
