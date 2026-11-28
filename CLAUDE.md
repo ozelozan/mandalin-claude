@@ -10,4 +10,5 @@
 ## İşler
 
 - `gunluk-ozet/` — günlük takvim özetleri.
+- `cam-kumlama-dalga-desen/` — 120 cm cam kumlama dalga deseni (yatayda kesintisiz vektör).
 - `omer-asaf/` — RKR207 Eğitsel Oyunlar ödevi (PowerPoint sunumu, Word belgesi, ana oyun videosu).
